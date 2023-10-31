@@ -1,7 +1,7 @@
 ﻿using Excely.Debug.Models;
-using Excely.Exporters;
+using Excely.EPPlus.LGPL.Exporters;
+using Excely.EPPlus.LGPL.Shaders.Xlsx;
 using Excely.Shaders;
-using Excely.Shaders.Xlsx;
 
 namespace Excely.Debug
 {

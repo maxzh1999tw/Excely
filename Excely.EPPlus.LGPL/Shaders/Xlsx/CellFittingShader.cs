@@ -1,6 +1,6 @@
 ﻿using OfficeOpenXml;
 
-namespace Excely.Shaders.Xlsx
+namespace Excely.EPPlus.LGPL.Shaders.Xlsx
 {
     /// <summary>
     /// 使儲存格自動適配寬高

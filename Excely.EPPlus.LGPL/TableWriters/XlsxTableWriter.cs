@@ -1,6 +1,7 @@
-﻿using OfficeOpenXml;
+﻿using Excely.TableWriters;
+using OfficeOpenXml;
 
-namespace Excely.TableWriters
+namespace Excely.EPPlus.LGPL.TableWriters
 {
     /// <summary>
     /// 提供將表格匯出為 Xlsx 的功能

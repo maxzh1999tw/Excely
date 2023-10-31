@@ -1,6 +1,4 @@
-﻿using OfficeOpenXml;
-
-namespace Excely.Shaders
+﻿namespace Excely.Shaders
 {
     /// <summary>
     /// 定義了一個可以調整匯出結果的執行單元

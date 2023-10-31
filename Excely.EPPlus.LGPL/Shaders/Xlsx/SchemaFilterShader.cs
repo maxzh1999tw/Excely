@@ -1,6 +1,6 @@
 ﻿using OfficeOpenXml;
 
-namespace Excely.Shaders.Xlsx
+namespace Excely.EPPlus.LGPL.Shaders.Xlsx
 {
     /// <summary>
     /// 為表頭啟用篩選

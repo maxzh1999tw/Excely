@@ -1,6 +1,7 @@
-﻿using OfficeOpenXml;
+﻿using Excely.Shaders;
+using OfficeOpenXml;
 
-namespace Excely.Shaders.Xlsx
+namespace Excely.EPPlus.LGPL.Shaders.Xlsx
 {
     public abstract class XlsxShaderBase : IShader
     {

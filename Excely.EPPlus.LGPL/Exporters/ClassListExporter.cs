@@ -1,9 +1,9 @@
-﻿using Excely.Shaders;
+﻿using Excely.EPPlus.LGPL.TableWriters;
+using Excely.Shaders;
 using Excely.TableFactorys;
-using Excely.TableWriters;
 using OfficeOpenXml;
 
-namespace Excely.Exporters
+namespace Excely.EPPlus.LGPL.Exporters
 {
     /// <summary>
     /// 提供以類別結構為欄位，將物件集合匯出的功能
