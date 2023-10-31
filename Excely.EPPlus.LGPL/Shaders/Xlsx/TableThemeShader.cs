@@ -12,7 +12,7 @@ namespace Excely.EPPlus.LGPL.Shaders.Xlsx
         /// <summary>
         /// 表格左上角的儲存格座標
         /// </summary>
-        public (int Row, int Col) StartCell { get; set; } = (0, 0);
+        public CellLocation StartCell { get; set; } = new(0, 0);
 
         /// <summary>
         /// 表頭高度
@@ -44,14 +44,14 @@ namespace Excely.EPPlus.LGPL.Shaders.Xlsx
         protected override void ExcuteOnWorksheet(ExcelWorksheet worksheet)
         {
             // 設定標題的背景色和文字色
-            var header = worksheet.Cells[StartCell.Row + 1, StartCell.Col + 1, StartCell.Row + SchemaHeight, StartCell.Col + TableWidth];
+            var header = worksheet.Cells[StartCell.Row + 1, StartCell.Column + 1, StartCell.Row + SchemaHeight, StartCell.Column + TableWidth];
             header.Style.Fill.PatternType = ExcelFillStyle.Solid;
             header.Style.Fill.BackgroundColor.SetColor(Theme.HeaderBackgroundColor);
             header.Style.Font.Color.SetColor(Theme.HeaderTextColor);
             header.Style.Font.Bold = true;
 
             // 給整個表格設定邊框色
-            var table = worksheet.Cells[StartCell.Row + 1, StartCell.Col + 1, StartCell.Row + TableHeight, StartCell.Col + TableWidth];
+            var table = worksheet.Cells[StartCell.Row + 1, StartCell.Column + 1, StartCell.Row + TableHeight, StartCell.Column + TableWidth];
             table.Style.Border.Top.Style = table.Style.Border.Bottom.Style = table.Style.Border.Left.Style = table.Style.Border.Right.Style = ExcelBorderStyle.Thin;
             table.Style.Border.Top.Color.SetColor(Theme.BorderColor);
             table.Style.Border.Bottom.Color.SetColor(Theme.BorderColor);

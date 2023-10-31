@@ -11,7 +11,7 @@ namespace Excely.EPPlus.LGPL.TableWriters
         /// <summary>
         /// 起始匯出儲存格
         /// </summary>
-        public (int Row, int Col) StartCell { get; set; } = (0, 0);
+        public CellLocation StartCell { get; set; } = new(0, 0);
 
         /// <summary>
         /// 目標工作表
@@ -23,7 +23,7 @@ namespace Excely.EPPlus.LGPL.TableWriters
             TargetWorksheet = targetWorksheet;
         }
 
-        public XlsxTableWriter(ExcelWorksheet targetWorksheet, (int Row, int Col) startCell)
+        public XlsxTableWriter(ExcelWorksheet targetWorksheet, CellLocation startCell)
         {
             TargetWorksheet = targetWorksheet;
             StartCell = startCell;
@@ -34,7 +34,7 @@ namespace Excely.EPPlus.LGPL.TableWriters
             int rowPointer = StartCell.Row;
             foreach (var rowData in table.Data)
             {
-                int colPointer = StartCell.Col;
+                int colPointer = StartCell.Column;
                 foreach (var colData in rowData)
                 {
                     TargetWorksheet.Cells[rowPointer + 1, colPointer + 1].Value = colData;

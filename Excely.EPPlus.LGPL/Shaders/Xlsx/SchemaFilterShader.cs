@@ -15,14 +15,14 @@ namespace Excely.EPPlus.LGPL.Shaders.Xlsx
         /// <summary>
         /// 表格起始儲存格座標
         /// </summary>
-        public (int Row, int Col) StartCell { get; set; } = (0, 0);
+        public CellLocation StartCell { get; set; } = new(0, 0);
 
         public SchemaFilterShader(int schemaLength)
         {
             SchemaLength = schemaLength;
         }
 
-        public SchemaFilterShader(int schemaLength, (int Row, int Col) startCell)
+        public SchemaFilterShader(int schemaLength, CellLocation startCell)
         {
             SchemaLength = schemaLength;
             StartCell = startCell;
@@ -30,7 +30,7 @@ namespace Excely.EPPlus.LGPL.Shaders.Xlsx
 
         protected override void ExcuteOnWorksheet(ExcelWorksheet target)
         {
-            target.Cells[StartCell.Row + 1, StartCell.Col + 1, StartCell.Row + 1, StartCell.Col + SchemaLength].AutoFilter = true;
+            target.Cells[StartCell.Row + 1, StartCell.Column + 1, StartCell.Row + 1, StartCell.Column + SchemaLength].AutoFilter = true;
         }
     }
 }
