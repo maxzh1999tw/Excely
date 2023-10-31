@@ -28,7 +28,7 @@ namespace Excely.Exporters
             tableWriter.Write(table);
             foreach (var shaders in Shaders)
             {
-                shaders.Excute(worksheet);
+                worksheet = shaders.Excute(worksheet);
             }
         }
 

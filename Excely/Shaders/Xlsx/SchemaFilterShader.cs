@@ -5,7 +5,7 @@ namespace Excely.Shaders.Xlsx
     /// <summary>
     /// 為表頭啟用篩選
     /// </summary>
-    public class SchemaFilterShader : IShader
+    public class SchemaFilterShader : XlsxShaderBase
     {
         /// <summary>
         /// 表頭寬度
@@ -28,9 +28,9 @@ namespace Excely.Shaders.Xlsx
             StartCell = startCell;
         }
 
-        public void Excute(ExcelWorksheet worksheet)
+        protected override void ExcuteOnWorksheet(ExcelWorksheet target)
         {
-            worksheet.Cells[StartCell.Row + 1, StartCell.Col + 1, StartCell.Row + 1, StartCell.Col + SchemaLength].AutoFilter = true;
+            target.Cells[StartCell.Row + 1, StartCell.Col + 1, StartCell.Row + 1, StartCell.Col + SchemaLength].AutoFilter = true;
         }
     }
 }

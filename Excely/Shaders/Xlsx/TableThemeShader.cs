@@ -7,7 +7,7 @@ namespace Excely.Shaders.Xlsx
     /// <summary>
     /// 將一段範圍內的儲存格視為表格，並為其套上表格造型
     /// </summary>
-    public class TableThemeShader : IShader
+    public class TableThemeShader : XlsxShaderBase
     {
         /// <summary>
         /// 表格左上角的儲存格座標
@@ -41,7 +41,7 @@ namespace Excely.Shaders.Xlsx
             TableHeight = tableHeight;
         }
 
-        public void Excute(ExcelWorksheet worksheet)
+        protected override void ExcuteOnWorksheet(ExcelWorksheet worksheet)
         {
             // 設定標題的背景色和文字色
             var header = worksheet.Cells[StartCell.Row + 1, StartCell.Col + 1, StartCell.Row + SchemaHeight, StartCell.Col + TableWidth];
