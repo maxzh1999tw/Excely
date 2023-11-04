@@ -1,5 +1,6 @@
 ﻿using Excely.Shaders;
 using Excely.TableFactories;
+using System.Reflection;
 
 namespace Excely.Exporters
 {
@@ -44,9 +45,20 @@ namespace Excely.Exporters
         /// 建立一個以 Class list 為輸入資料型別的 ExcelyExporter。
         /// </summary>
         /// <typeparam name="TClass">欲轉換的 Class</typeparam>
-        public static ExcelyExporter<IEnumerable<TClass>> FromClassList<TClass>() where TClass : class
+        public static ExcelyExporter<IEnumerable<TClass>> FromClassList<TClass>(
+            Func<PropertyInfo, bool>? propertyShowPolicy = null,
+            Func<PropertyInfo, string?>? propertyNamePolicy = null,
+            Func<PropertyInfo, int>? propertyOrderPolicy = null,
+            Func<TClass, PropertyInfo, object?>? customValuePolicy = null
+            ) where TClass : class
         {
-            ITableFactory<IEnumerable<TClass>> tableFactory = new ClassListTableFactory<TClass>();
+            ITableFactory<IEnumerable<TClass>> tableFactory = new ClassListTableFactory<TClass>()
+            {
+                PropertyShowPolicy = propertyShowPolicy,
+                PropertyNamePolicy = propertyNamePolicy,
+                PropertyOrderPolicy = propertyOrderPolicy,
+                CustomValuePolicy = customValuePolicy,
+            };
 
             return new ExcelyExporter<IEnumerable<TClass>>(tableFactory);
         }

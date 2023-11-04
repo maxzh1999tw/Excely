@@ -22,34 +22,36 @@ namespace Excely.Debug
                 new Student(1, "Test2", null),
             };
 
-            var exporter = ExcelyExporter.FromClassList<Student>();
+            var exporter = ExcelyExporter.FromClassList<Student>(
+                customValuePolicy: (obj, p) => p.Name switch
+                {
+                    nameof(Student.Birthday) => obj.Birthday?.ToString("yyyy/MM/dd"),
+                    _ => p.GetValue(obj),
+                });
             using var excel = exporter.ToExcel(students);
 
             var reader = new XlsxTableFactory();
             var table = reader.GetTable(excel.Workbook.Worksheets.First());
+
+            var cellErrors = new Dictionary<CellLocation, string>();
             var importResult = new ClassListTableImporter<Student>()
             {
-                StopWhenError = false
+                StopWhenError = false,
+                ErrorHandlingPolicy = (cell, student, prop, value, ex) =>
+                {
+                    cellErrors.Add(cell, ex.ToString());
+                    return true;
+                }
             }.Import(table);
 
-            if(importResult.CellErrors.Any())
+            if(cellErrors.Any())
             {
-                var errorRows = table.Data.Where(x => importResult.CellErrors.Any(c => c.Key.Row == table.Data.IndexOf(x))).ToList();
-                errorRows.Insert(0, table.Data[0]);
-                var errTable = new ExcelyTable(errorRows);
                 using var errExcel = new ExcelPackage();
                 var sheet = errExcel.Workbook.Worksheets.Add("sheet1");
-                new XlsxTableWriter(sheet).Write(errTable);
-                new ErrorMarkShader(importResult.CellErrors.ToDictionary(x => x.Key, x => x.Value.Message), "Max").Excute(sheet);
+                new XlsxTableWriter(sheet).Write(table);
+                new ErrorMarkShader(cellErrors, "Max").Excute(sheet);
                 errExcel.SaveAs(new FileInfo("err.xlsx"));
             }
         }
-
-        static object? MyCustomValuePolicy(Student student, PropertyInfo property) =>
-            property.Name switch
-            {
-                nameof(Student.Birthday) => student.Birthday?.ToString("yyyy/MM/dd"),
-                _ => property.GetValue(student),
-            };
     }
 }

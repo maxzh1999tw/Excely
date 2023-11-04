@@ -17,6 +17,7 @@ namespace Excely.TableImporter
 
         /// <summary>
         /// 當轉換發生錯誤時是否立刻停止。
+        /// 若此欄為 false，則發生錯誤時會跳過該 Row，繼續執行匯入。
         /// </summary>
         public bool StopWhenError { get; set; } = true;
 
@@ -31,6 +32,7 @@ namespace Excely.TableImporter
         /// 決定 Property 出現在表頭時的位置。
         /// 輸入參數為 PropertyInfo，輸出結果為「欄位索引」，
         /// 若該 Property 沒有出現在表頭中，請回傳 null。
+        /// 若此屬性為 null，則依照 property 預設順序排序。
         /// </summary>
         public Func<PropertyInfo, int?>? PropertyIndexPolicy { get; set; }
 
@@ -39,6 +41,13 @@ namespace Excely.TableImporter
         /// 輸入參數為 (PropertyInfo, 原始值)，輸出結果為「應寫入的值」。
         /// </summary>
         public Func<PropertyInfo, object?, object?>? CustomValuePolicy { get; set; }
+
+        /// <summary>
+        /// 將值輸入進物件發生錯誤時，決定錯誤處理方式。
+        /// 輸入參數為 (儲存格座標, 目標物件, PropertyInfo, 嘗試輸入的值, 發生的錯誤, 是否忽略此錯誤)
+        /// 若此屬性為 null，則一律拋出異常。
+        /// </summary>
+        public Func<CellLocation, TClass, PropertyInfo, object?, Exception, bool>? ErrorHandlingPolicy { get; set; }
 
         private PropertyInfo[]? _TProperies;
 
@@ -58,7 +67,7 @@ namespace Excely.TableImporter
         /// 將指定的 Table 匯入為 Class list。
         /// </summary>
         /// <returns>匯入結果</returns>
-        public ImportResult<IEnumerable<TClass>> Import(ExcelyTable table)
+        public IEnumerable<TClass> Import(ExcelyTable table)
         {
             if (HasSchema)
             {
@@ -84,10 +93,9 @@ namespace Excely.TableImporter
         /// <param name="table">來源 Table</param>
         /// <param name="propertyMatcher">取得欄位與 Property 對應的邏輯</param>
         /// <returns>匯入結果</returns>
-        private ImportResult<IEnumerable<TClass>> ImportInternal(ExcelyTable table, Func<PropertyInfo, int, bool> propertyMatcher)
+        private IEnumerable<TClass> ImportInternal(ExcelyTable table, Func<PropertyInfo, int, bool> propertyMatcher)
         {
             var result = new List<TClass>(table.MaxRowCount);
-            var rowErrors = new Dictionary<CellLocation, Exception>();
 
             for (var row = HasSchema ? 1 : 0; row < table.MaxRowCount; row++)
             {
@@ -110,17 +118,23 @@ namespace Excely.TableImporter
                         }
                         catch (Exception ex)
                         {
-                            if (StopWhenError) throw;
-                            rowErrors[new CellLocation(row, col)] = ex;
-                            rowParseSuccess = false;
+                            var ignore = ErrorHandlingPolicy?.Invoke(new CellLocation(row, col), obj, property, value, ex) ?? false;
+                            if (!ignore && StopWhenError)
+                            {
+                                throw;
+                            }
+
+                            rowParseSuccess = ignore;
                         }
                     }
+
+                    if (!rowParseSuccess) break;
                 }
 
                 if (rowParseSuccess) result.Add(obj);
             }
 
-            return new ImportResult<IEnumerable<TClass>>(result, rowErrors);
+            return result;
         }
     }
 }
