@@ -1,4 +1,4 @@
-﻿namespace Excely.TableFactorys
+﻿namespace Excely.TableFactories
 {
     /// <summary>
     /// 定義了一個可以取得表格的執行單元
