@@ -7,6 +7,8 @@ using Excely.Shaders;
 using Excely.TableImporter;
 using System.Reflection;
 using OfficeOpenXml;
+using Excely.Exporters;
+using Excely.TableFactories;
 
 namespace Excely.Debug
 {
@@ -20,14 +22,7 @@ namespace Excely.Debug
                 new Student(1, "Test2", null),
             };
 
-            var exporter = new ClassListExporter<Student>(customValuePolicy: MyCustomValuePolicy)
-            {
-                Shaders = new IShader[]
-                {
-                    new CellFittingShader()
-                }
-            };
-
+            var exporter = ExcelyExporter.FromClassList<Student>();
             using var excel = exporter.ToExcel(students);
 
             var reader = new XlsxTableFactory();

@@ -1,22 +1,22 @@
 ﻿namespace Excely
 {
     /// <summary>
-    /// 表格資料結構
+    /// 表格資料結構。
     /// </summary>
     public class ExcelyTable
     {
         /// <summary>
-        /// 表格資料
+        /// 表格資料。
         /// </summary>
         public IList<IList<object?>> Data { get; init; }
 
         /// <summary>
-        /// 表格高度(含表頭)
+        /// 表格高度(含表頭)。
         /// </summary>
         public int MaxRowCount => Data.Count;
 
         /// <summary>
-        /// 表格寬度
+        /// 表格寬度。
         /// </summary>
         public int MaxColCount => Data.OrderBy(x => x.Count()).FirstOrDefault()?.Count ?? 0;
 

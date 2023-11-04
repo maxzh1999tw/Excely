@@ -3,6 +3,9 @@ using OfficeOpenXml;
 
 namespace Excely.EPPlus.LGPL.Shaders.Xlsx
 {
+    /// <summary>
+    /// Xlsx 專用的 Shader 開發基礎類別。
+    /// </summary>
     public abstract class XlsxShaderBase : IShader
     {
         public T Excute<T>(T target)

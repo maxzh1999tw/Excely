@@ -4,17 +4,17 @@ using OfficeOpenXml;
 namespace Excely.EPPlus.LGPL.TableWriters
 {
     /// <summary>
-    /// 提供將表格匯出為 Xlsx 的功能
+    /// 提供將表格匯出為 Xlsx 的功能。
     /// </summary>
     public class XlsxTableWriter : ITableWriter<ExcelWorksheet>
     {
         /// <summary>
-        /// 起始匯出儲存格
+        /// 起始匯出儲存格。
         /// </summary>
         public CellLocation StartCell { get; set; } = new(0, 0);
 
         /// <summary>
-        /// 目標工作表
+        /// 目標工作表。
         /// </summary>
         public ExcelWorksheet TargetWorksheet { get; set; }
 

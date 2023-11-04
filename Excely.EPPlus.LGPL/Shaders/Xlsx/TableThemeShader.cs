@@ -5,32 +5,32 @@ using System.Drawing;
 namespace Excely.EPPlus.LGPL.Shaders.Xlsx
 {
     /// <summary>
-    /// 將一段範圍內的儲存格視為表格，並為其套上表格造型
+    /// 將一段範圍內的儲存格視為表格，並為其套上表格造型。
     /// </summary>
     public class TableThemeShader : XlsxShaderBase
     {
         /// <summary>
-        /// 表格左上角的儲存格座標
+        /// 表格左上角的儲存格座標。
         /// </summary>
         public CellLocation StartCell { get; set; } = new(0, 0);
 
         /// <summary>
-        /// 表頭高度
+        /// 表頭高度。
         /// </summary>
         public int SchemaHeight { get; set; } = 1;
 
         /// <summary>
-        /// 表格寬度
+        /// 表格寬度。
         /// </summary>
         public int TableWidth { get; set; }
 
         /// <summary>
-        /// 表格高度
+        /// 表格高度。
         /// </summary>
         public int TableHeight { get; set; }
 
         /// <summary>
-        /// 表格主題
+        /// 表格主題。
         /// </summary>
         public TableTheme Theme { get; set; } = TableTheme.Default;
 
@@ -61,22 +61,22 @@ namespace Excely.EPPlus.LGPL.Shaders.Xlsx
     }
 
     /// <summary>
-    /// 用於表達表格主題的結構
+    /// 用於表達表格主題的結構。
     /// </summary>
     public struct TableTheme
     {
         /// <summary>
-        /// 表頭背景色
+        /// 表頭背景色。
         /// </summary>
         public Color HeaderBackgroundColor { get; set; }
 
         /// <summary>
-        /// 表頭文字顏色
+        /// 表頭文字顏色。
         /// </summary>
         public Color HeaderTextColor { get; set; }
 
         /// <summary>
-        /// 邊框顏色
+        /// 邊框顏色。
         /// </summary>
         public Color BorderColor { get; set; }
 

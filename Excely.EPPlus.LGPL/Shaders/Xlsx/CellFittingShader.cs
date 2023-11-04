@@ -3,7 +3,7 @@
 namespace Excely.EPPlus.LGPL.Shaders.Xlsx
 {
     /// <summary>
-    /// 使儲存格自動適配寬高
+    /// 使儲存格自動適配寬高。
     /// </summary>
     public class CellFittingShader : XlsxShaderBase
     {

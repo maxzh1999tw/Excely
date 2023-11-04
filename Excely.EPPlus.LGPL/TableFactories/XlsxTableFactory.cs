@@ -3,10 +3,20 @@ using OfficeOpenXml;
 
 namespace Excely.EPPlus.LGPL.TableFactories
 {
+    /// <summary>
+    /// 提供將 Xlsx 匯入為 Table 的功能。
+    /// </summary>
     public class XlsxTableFactory : ITableFactory<ExcelWorksheet>
     {
+        /// <summary>
+        /// 匯入起始儲存格。
+        /// </summary>
         public CellLocation StartCell { get; set; } = new CellLocation(0, 0);
 
+        /// <summary>
+        /// 匯入結束儲存格。
+        /// 若為 null 代表不設限。
+        /// </summary>
         public CellLocation? EndCell { get; set; }
 
         public ExcelyTable GetTable(ExcelWorksheet input)
