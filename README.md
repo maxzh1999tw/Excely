@@ -37,8 +37,8 @@ excel.SaveAs(new FileInfo("TestFile.xlsx"));
 ```
 
 ## 貢獻
-可以先到 [Wiki](https://github.com/maxzh1999tw/Excely/wiki) 大致了解一下專案資訊，
-Issue 頁面可能有些懸賞任務需要您的協助，
+可以先到 [Wiki](https://github.com/maxzh1999tw/Excely/wiki) 大致了解一下專案資訊。  
+Issue 頁面可能有些懸賞任務需要您的協助。  
 如果您有任何建議或發現任何問題，也歡迎開啟 issue 或提交 pull request。
 
 ## 授權
