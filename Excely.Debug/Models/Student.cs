@@ -2,11 +2,13 @@
 {
     internal class Student
     {
-        public int Id { get; set; }
-        public string Name { get; set; }
-        public DateTime Birthday { get; set; }
+        public int Id { get; set; } = 0;
+        public string Name { get; set; } = string.Empty;
+        public DateTime? Birthday { get; set; }
 
-        public Student(int id, string name, DateTime birthday)
+        public Student() { }
+
+        public Student(int id, string name, DateTime? birthday)
         {
             Id = id;
             Name = name;

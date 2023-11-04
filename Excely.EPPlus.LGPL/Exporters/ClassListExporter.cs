@@ -1,6 +1,6 @@
 ﻿using Excely.EPPlus.LGPL.TableWriters;
 using Excely.Shaders;
-using Excely.TableFactorys;
+using Excely.TableFactories;
 using OfficeOpenXml;
 
 namespace Excely.EPPlus.LGPL.Exporters

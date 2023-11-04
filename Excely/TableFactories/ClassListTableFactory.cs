@@ -1,6 +1,6 @@
 ﻿using System.Reflection;
 
-namespace Excely.TableFactorys
+namespace Excely.TableFactories
 {
     /// <summary>
     /// 提供以類別結構為欄位，將物件集合傾印至表格的功能
@@ -43,7 +43,7 @@ namespace Excely.TableFactorys
                                        .OrderBy(x => PropertyOrderPolicy?.Invoke(x) ?? 0)
                                        .ToList();
 
-            var table = new List<IEnumerable<object?>>
+            var table = new List<IList<object?>>
             {
                 GetSchema(properties)
             };
@@ -61,9 +61,9 @@ namespace Excely.TableFactorys
         /// </summary>
         /// <param name="properties">欲匯出的 Properties</param>
         /// <returns>表頭列</returns>
-        private IEnumerable<object?> GetSchema(IEnumerable<PropertyInfo> properties)
+        private IList<object?> GetSchema(IEnumerable<PropertyInfo> properties)
         {
-            return properties.Select(property => PropertyNamePolicy?.Invoke(property) ?? property.Name).ToList();
+            return properties.Select(property => PropertyNamePolicy?.Invoke(property) ?? property.Name).ToList<object?>();
         }
 
         /// <summary>
@@ -72,7 +72,7 @@ namespace Excely.TableFactorys
         /// <param name="item">來源物件</param>
         /// <param name="properties">欲匯出的 Properties</param>
         /// <returns>資料列</returns>
-        private IEnumerable<object?> GetRow(T item, IEnumerable<PropertyInfo> properties)
+        private IList<object?> GetRow(T item, IEnumerable<PropertyInfo> properties)
         {
             return properties.Select(property => CustomValuePolicy?.Invoke(item, property) ?? property.GetValue(item)).ToList();
         }
