@@ -5,6 +5,7 @@ using Excely.EPPlus.LGPL.TableFactories;
 using Excely.EPPlus.LGPL.TableWriters;
 using Excely.Shaders;
 using Excely.TableImporter;
+using System.Reflection;
 using OfficeOpenXml;
 
 namespace Excely.Debug
@@ -19,13 +20,8 @@ namespace Excely.Debug
                 new Student(1, "Test2", null),
             };
 
-            var exporter = new ClassListExporter<Student>
+            var exporter = new ClassListExporter<Student>(customValuePolicy: MyCustomValuePolicy)
             {
-                CustomValuePolicy = (student, property) => property.Name switch
-                {
-                    nameof(Student.Birthday) => student.Birthday?.ToString("yyyy/MM/dd"),
-                    _ => property.GetValue(student),
-                },
                 Shaders = new IShader[]
                 {
                     new CellFittingShader()
@@ -53,5 +49,12 @@ namespace Excely.Debug
                 errExcel.SaveAs(new FileInfo("err.xlsx"));
             }
         }
+
+        static object? MyCustomValuePolicy(Student student, PropertyInfo property) =>
+            property.Name switch
+            {
+                nameof(Student.Birthday) => student.Birthday?.ToString("yyyy/MM/dd"),
+                _ => property.GetValue(student),
+            };
     }
 }
