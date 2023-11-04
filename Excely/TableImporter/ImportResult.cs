@@ -4,14 +4,14 @@
     {
         public T ResultData;
 
-        public Dictionary<CellLocation, Exception> ErrorCells;
+        public Dictionary<CellLocation, Exception> CellErrors;
 
-        public ImportResult(T resultData, Dictionary<CellLocation, Exception> errorCells)
+        public ImportResult(T resultData, Dictionary<CellLocation, Exception> cellErrors)
         {
             ResultData = resultData;
-            ErrorCells = errorCells;
+            CellErrors = cellErrors;
         }
 
-        public readonly bool IsAllSuccess => !ErrorCells.Any();
+        public readonly bool IsAllSuccess => !CellErrors.Any();
     }
 }
