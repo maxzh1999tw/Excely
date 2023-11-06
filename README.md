@@ -29,6 +29,8 @@ static void Main(string[] args)
 }
 ```
 
+您可以瀏覽[開始使用 Excely](https://github.com/maxzh1999tw/Excely/wiki/%E9%96%8B%E5%A7%8B%E4%BD%BF%E7%94%A8-Excely)來了解更多。
+
 ## 貢獻
 可以先到 [Wiki](https://github.com/maxzh1999tw/Excely/wiki) 大致了解一下專案資訊。  
 [Issue](https://github.com/maxzh1999tw/Excely/issues) 頁面可能有些懸賞任務需要您的協助。  
