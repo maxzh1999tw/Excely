@@ -2,7 +2,7 @@
 using Excely.Workflows;
 using OfficeOpenXml;
 
-namespace Excely.EPPlus.LGPL.Workflows
+namespace Excely.Workflows
 {
     public static class XlsxExporterExtension
     {

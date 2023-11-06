@@ -34,7 +34,8 @@ namespace Excely.Workflows
             Func<PropertyInfo, bool>? propertyShowPolicy = null,
             Func<PropertyInfo, string?>? propertyNamePolicy = null,
             Func<PropertyInfo, int>? propertyOrderPolicy = null,
-            Func<TClass, PropertyInfo, object?>? customValuePolicy = null
+            Func<TClass, PropertyInfo, object?>? customValuePolicy = null,
+            IEnumerable<IShader>? shaders = null
             ) where TClass : class
         {
             ITableFactory<IEnumerable<TClass>> tableFactory = new ClassListTableFactory<TClass>()
@@ -45,7 +46,12 @@ namespace Excely.Workflows
                 CustomValuePolicy = customValuePolicy,
             };
 
-            return new ExcelyExporter<IEnumerable<TClass>>(tableFactory);
+            var exporter = new ExcelyExporter<IEnumerable<TClass>>(tableFactory);
+            if(shaders != null )
+            {
+                exporter.Shaders = shaders;
+            }
+            return exporter;
         }
     }
 }
