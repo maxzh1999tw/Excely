@@ -1,4 +1,4 @@
-﻿using Excely.TableWriters;
+﻿using Excely.TableConverters;
 using OfficeOpenXml;
 
 namespace Excely.EPPlus.LGPL.TableWriters
@@ -6,7 +6,7 @@ namespace Excely.EPPlus.LGPL.TableWriters
     /// <summary>
     /// 提供將表格匯出為 Xlsx 的功能。
     /// </summary>
-    public class XlsxTableWriter : ITableWriter<ExcelWorksheet>
+    public class XlsxTableWriter : ITableConverter<ExcelWorksheet>
     {
         /// <summary>
         /// 起始匯出儲存格。
@@ -29,7 +29,7 @@ namespace Excely.EPPlus.LGPL.TableWriters
             StartCell = startCell;
         }
 
-        public ExcelWorksheet Write(ExcelyTable table)
+        public ExcelWorksheet Convert(ExcelyTable table)
         {
             int rowPointer = StartCell.Row;
             foreach (var rowData in table.Data)

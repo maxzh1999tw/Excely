@@ -1,12 +1,8 @@
 ﻿using System.Reflection;
 
-namespace Excely.TableImporter
+namespace Excely.TableConverters
 {
-    /// <summary>
-    /// 提供將 Table 匯入為 Class list 的功能
-    /// </summary>
-    /// <typeparam name="TClass">欲轉換的類別</typeparam>
-    public class ClassListTableImporter<TClass> : ITableImporter<IEnumerable<TClass>> where TClass : class, new()
+    public class ClassListTableConverter<TClass> : ITableConverter<IEnumerable<TClass>> where TClass : class, new()
     {
         /// <summary>
         /// 匯入的 Table 是否含有表頭。
@@ -50,7 +46,6 @@ namespace Excely.TableImporter
         public Func<CellLocation, TClass, PropertyInfo, object?, Exception, bool>? ErrorHandlingPolicy { get; set; }
 
         private PropertyInfo[]? _TProperies;
-
         /// <summary>
         /// 目標型別 TClass 的 Properies。
         /// </summary>
@@ -67,7 +62,7 @@ namespace Excely.TableImporter
         /// 將指定的 Table 匯入為 Class list。
         /// </summary>
         /// <returns>匯入結果</returns>
-        public IEnumerable<TClass> Import(ExcelyTable table)
+        public IEnumerable<TClass> Convert(ExcelyTable table)
         {
             if (HasSchema)
             {
@@ -96,22 +91,18 @@ namespace Excely.TableImporter
         private IEnumerable<TClass> ImportInternal(ExcelyTable table, Func<PropertyInfo, int, bool> propertyMatcher)
         {
             var result = new List<TClass>(table.MaxRowCount);
-
             for (var row = HasSchema ? 1 : 0; row < table.MaxRowCount; row++)
             {
                 var obj = new TClass();
                 var rowParseSuccess = true;
-
                 for (var col = 0; col < table.MaxColCount; col++)
                 {
                     var property = TProperties.FirstOrDefault(p => propertyMatcher(p, col));
-
                     if (property != null)
                     {
                         var value = CustomValuePolicy != null
                             ? CustomValuePolicy(property, table.Data[row][col])
                             : table.Data[row][col];
-
                         try
                         {
                             property.SetValue(obj, value);
@@ -123,17 +114,13 @@ namespace Excely.TableImporter
                             {
                                 throw;
                             }
-
                             rowParseSuccess = ignore;
                         }
                     }
-
                     if (!rowParseSuccess) break;
                 }
-
                 if (rowParseSuccess) result.Add(obj);
             }
-
             return result;
         }
     }

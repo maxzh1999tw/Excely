@@ -15,7 +15,7 @@ namespace Excely.Workflows
         {
             var table = exporter.GetTable(sourceData);
             var tableWriter = new XlsxTableWriter(worksheet);
-            tableWriter.Write(table);
+            tableWriter.Convert(table);
             foreach (var shaders in exporter.Shaders)
             {
                 worksheet = shaders.Excute(worksheet);
