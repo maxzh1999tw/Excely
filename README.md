@@ -36,4 +36,4 @@ static void Main(string[] args)
 
 ## 授權
 
-本套件使用 Apache License 2.0 授權，詳情請參見 [LICENSE](LICENSE)。
+本套件使用 Apache-2.0 License 授權，詳情請參見 [LICENSE](LICENSE)。
