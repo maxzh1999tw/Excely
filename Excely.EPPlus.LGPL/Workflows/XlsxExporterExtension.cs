@@ -1,8 +1,8 @@
 ﻿using Excely.EPPlus.LGPL.TableWriters;
-using Excely.Exporters;
+using Excely.Workflows;
 using OfficeOpenXml;
 
-namespace Excely.EPPlus.LGPL.Exporters
+namespace Excely.EPPlus.LGPL.Workflows
 {
     public static class XlsxExporterExtension
     {

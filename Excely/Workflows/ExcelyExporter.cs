@@ -2,19 +2,14 @@
 using Excely.TableFactories;
 using System.Reflection;
 
-namespace Excely.Exporters
+namespace Excely.Workflows
 {
     /// <summary>
     /// 提供從資料輸入到匯出的完整工作流程。
     /// </summary>
     /// <typeparam name="TInput">資料的輸入型別</typeparam>
-    public class ExcelyExporter<TInput>
+    public class ExcelyExporter<TInput> : BaseWorkflow<TInput>
     {
-        /// <summary>
-        /// 將輸入資料轉換為 Table 的 ITableFactory 物件。
-        /// </summary>
-        protected ITableFactory<TInput> TableFactory { get; set; }
-
         /// <summary>
         /// 取得匯出結果後依序執行的 IShaders
         /// </summary>
@@ -23,17 +18,7 @@ namespace Excely.Exporters
         /// <summary>
         /// 以指定的 ITableFactory 物件初始化新的實例。
         /// </summary>
-        public ExcelyExporter(ITableFactory<TInput> tableFactory)
-        {
-            TableFactory = tableFactory;
-        }
-
-        /// <summary>
-        /// 將輸入資料轉換為 Table。
-        /// </summary>
-        /// <param name="sourceData">輸入資料</param>
-        /// <returns>ExcelyTable 格式的資料</returns>
-        public ExcelyTable GetTable(TInput sourceData) => TableFactory.GetTable(sourceData);
+        public ExcelyExporter(ITableFactory<TInput> tableFactory) : base(tableFactory) { }
     }
 
     /// <summary>
