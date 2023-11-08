@@ -1,7 +1,7 @@
 ﻿using Excely.Shaders;
 using OfficeOpenXml;
 
-namespace Excely.EPPlus.LGPL.Shaders.Xlsx
+namespace Excely.EPPlus.LGPL.Shaders
 {
     /// <summary>
     /// Xlsx 專用的 Shader 開發基礎類別。

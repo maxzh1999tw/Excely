@@ -1,7 +1,7 @@
 ﻿using OfficeOpenXml;
 using System.Drawing;
 
-namespace Excely.EPPlus.LGPL.Shaders.Xlsx
+namespace Excely.EPPlus.LGPL.Shaders
 {
     /// <summary>
     /// 將出錯的表格醒目標示，並標註錯誤原因。

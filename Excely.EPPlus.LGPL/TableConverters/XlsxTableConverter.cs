@@ -1,12 +1,12 @@
 ﻿using Excely.TableConverters;
 using OfficeOpenXml;
 
-namespace Excely.EPPlus.LGPL.TableWriters
+namespace Excely.EPPlus.LGPL.TableConverters
 {
     /// <summary>
     /// 提供將表格匯出為 Xlsx 的功能。
     /// </summary>
-    public class XlsxTableWriter : ITableConverter<ExcelWorksheet>
+    public class XlsxTableConverter : ITableConverter<ExcelWorksheet>
     {
         /// <summary>
         /// 起始匯出儲存格。
@@ -18,12 +18,12 @@ namespace Excely.EPPlus.LGPL.TableWriters
         /// </summary>
         public ExcelWorksheet TargetWorksheet { get; set; }
 
-        public XlsxTableWriter(ExcelWorksheet targetWorksheet)
+        public XlsxTableConverter(ExcelWorksheet targetWorksheet)
         {
             TargetWorksheet = targetWorksheet;
         }
 
-        public XlsxTableWriter(ExcelWorksheet targetWorksheet, CellLocation startCell)
+        public XlsxTableConverter(ExcelWorksheet targetWorksheet, CellLocation startCell)
         {
             TargetWorksheet = targetWorksheet;
             StartCell = startCell;

@@ -2,7 +2,7 @@
 using OfficeOpenXml.Style;
 using System.Drawing;
 
-namespace Excely.EPPlus.LGPL.Shaders.Xlsx
+namespace Excely.EPPlus.LGPL.Shaders
 {
     /// <summary>
     /// 將一段範圍內的儲存格視為表格，並為其套上表格造型。

@@ -1,4 +1,4 @@
-﻿using Excely.EPPlus.LGPL.TableWriters;
+﻿using Excely.EPPlus.LGPL.TableConverters;
 using OfficeOpenXml;
 
 namespace Excely.Workflows
@@ -13,7 +13,7 @@ namespace Excely.Workflows
         public static void ToWorksheet<TInput>(this ExcelyExporter<TInput> exporter, TInput sourceData, ExcelWorksheet worksheet)
         {
             var table = exporter.GetTable(sourceData);
-            var tableWriter = new XlsxTableWriter(worksheet);
+            var tableWriter = new XlsxTableConverter(worksheet);
             tableWriter.Convert(table);
             foreach (var shaders in exporter.Shaders)
             {
