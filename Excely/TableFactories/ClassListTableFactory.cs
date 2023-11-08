@@ -1,4 +1,5 @@
-﻿using System.Reflection;
+﻿using System.Formats.Asn1;
+using System.Reflection;
 
 namespace Excely.TableFactories
 {
@@ -9,39 +10,26 @@ namespace Excely.TableFactories
     public class ClassListTableFactory<TClass> : ITableFactory<IEnumerable<TClass>> where TClass : class
     {
         /// <summary>
-        /// 決定 Property 是否應作為欄位匯出的執行邏輯。
-        /// 輸入參數為 PropertyInfo，輸出結果為「是否應作為欄位匯出」，
-        /// 若此屬性為 null，則全部欄位都匯出。
+        /// 轉換過程的執行細節
         /// </summary>
-        public Func<PropertyInfo, bool>? PropertyShowPolicy { get; set; }
+        protected ClassListTableFactoryOptions<TClass> Options { get; set; } = new ClassListTableFactoryOptions<TClass>();
 
-        /// <summary>
-        /// 決定 Property 作為欄位時的名稱。
-        /// 輸入參數為 PropertyInfo，輸出結果為「欄位名稱」，
-        /// 若此屬性為 null，則欄位名稱為 PropertyInfo.Name。
-        /// </summary>
-        public Func<PropertyInfo, string?>? PropertyNamePolicy { get; set; }
+        #region === 建構子 ===
+        public ClassListTableFactory() { }
 
-        /// <summary>
-        /// 決定 Property 作為欄位時的順序。
-        /// 輸入參數為 PropertyInfo，輸出結果為「排序(由小到大)」，
-        /// 若此屬性為 null，則欄位依類別內預設排序。
-        /// </summary>
-        public Func<PropertyInfo, int>? PropertyOrderPolicy { get; set; }
-
-        /// <summary>
-        /// 決定資料寫入欄位時的值。
-        /// 輸入參數為 (當前匯出物件, PropertyInfo)，輸出結果為「欲寫入欄位的值」，
-        /// 若此屬性為 null，則值為該 Property 之 Value。
-        /// </summary>
-        public Func<TClass, PropertyInfo, object?>? CustomValuePolicy { get; set; }
+        public ClassListTableFactory(ClassListTableFactoryOptions<TClass> options)
+        {
+            Options = options;
+        }
+        #endregion
 
         public ExcelyTable GetTable(IEnumerable<TClass> sourceData)
         {
-            var properties = typeof(TClass).GetProperties()
-                                       .Where(x => PropertyShowPolicy?.Invoke(x) ?? true)
-                                       .OrderBy(x => PropertyOrderPolicy?.Invoke(x) ?? 0)
-                                       .ToList();
+            var properties = typeof(TClass).GetProperties();
+            properties = properties
+                            .Where(x => Options.PropertyShowPolicy(x))
+                            .OrderBy(x => Options.PropertyOrderPolicy(properties, x))
+                            .ToArray();
 
             var table = new List<IList<object?>>
             {
@@ -63,7 +51,7 @@ namespace Excely.TableFactories
         /// <returns>表頭列</returns>
         private IList<object?> GetSchema(IEnumerable<PropertyInfo> properties)
         {
-            return properties.Select(property => PropertyNamePolicy?.Invoke(property) ?? property.Name).ToList<object?>();
+            return properties.Select(property => Options.PropertyNamePolicy(property)).ToList<object?>();
         }
 
         /// <summary>
@@ -74,7 +62,42 @@ namespace Excely.TableFactories
         /// <returns>資料列</returns>
         private IList<object?> GetRow(TClass item, IEnumerable<PropertyInfo> properties)
         {
-            return properties.Select(property => CustomValuePolicy?.Invoke(item, property) ?? property.GetValue(item)).ToList();
+            return properties.Select(property => Options.CustomValuePolicy(property, item)).ToList();
         }
+    }
+
+    /// <summary>
+    /// 定義一組 ClassListTableFactory 的執行細節
+    /// </summary>
+    /// <typeparam name="TClass">目標類別</typeparam>
+    public class ClassListTableFactoryOptions<TClass>
+    {
+        /// <summary>
+        /// 決定 Property 是否應作為欄位匯出的執行邏輯。
+        /// 輸入參數為 PropertyInfo，輸出結果為「是否應作為欄位匯出」，
+        /// 預設為全部欄位都匯出。
+        /// </summary>
+        public Func<PropertyInfo, bool> PropertyShowPolicy { get; set; } = _ => true;
+
+        /// <summary>
+        /// 決定 Property 作為欄位時的名稱。
+        /// 輸入參數為 PropertyInfo，輸出結果為「欄位名稱」，
+        /// 預設為 PropertyInfo.Name。
+        /// </summary>
+        public Func<PropertyInfo, string?> PropertyNamePolicy { get; set; } = p => p.Name;
+
+        /// <summary>
+        /// 決定 Property 作為欄位時的順序。
+        /// 輸入參數為 (所有Property, 當前PropertyInfo)，輸出結果為「排序(由小到大)」，
+        /// 預設為依類別內預設排序。
+        /// </summary>
+        public Func<PropertyInfo[], PropertyInfo, int> PropertyOrderPolicy { get; set; } = (propertys, p) => Array.IndexOf(propertys, p);
+
+        /// <summary>
+        /// 決定資料寫入欄位時的值。
+        /// 輸入參數為 (PropertyInfo, 當前匯出物件)，輸出結果為「欲寫入欄位的值」，
+        /// 預設為該 Property 之 Value。
+        /// </summary>
+        public Func<PropertyInfo, TClass, object?> CustomValuePolicy { get; set; } = (p, obj) => p.GetValue(obj);
     }
 }

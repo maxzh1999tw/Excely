@@ -46,14 +46,14 @@ namespace Excely.Workflows
         /// </summary>
         /// <typeparam name="TClass">欲轉換的 Class</typeparam>
         public static ExcelyExporter<IEnumerable<TClass>> FromClassList<TClass>(
-            IEnumerable<IShader>? shaders = null,
-            ClassListTableFactory<TClass>? tableFactory = null) 
+            ClassListTableFactoryOptions<TClass>? options = null,
+            IEnumerable<IShader>? shaders = null)
             where TClass : class
         {
-            tableFactory ??= new ClassListTableFactory<TClass>();
+            var tableFactory = options == null ? new ClassListTableFactory<TClass>() : new ClassListTableFactory<TClass>(options);
 
             var exporter = new ExcelyExporter<IEnumerable<TClass>>(tableFactory);
-            if(shaders != null )
+            if (shaders != null)
             {
                 exporter.Shaders = shaders;
             }

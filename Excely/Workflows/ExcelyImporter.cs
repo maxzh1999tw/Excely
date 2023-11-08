@@ -1,5 +1,4 @@
-﻿using Excely.TableFactories;
-using Excely.TableConverters;
+﻿using Excely.TableConverters;
 
 namespace Excely.Workflows
 {
@@ -9,20 +8,22 @@ namespace Excely.Workflows
     /// <typeparam name="TInput">資料的輸入型別</typeparam>
     public abstract class ExcelyImporter<TInput>
     {
-        public abstract ExcelyTable GetTable(TInput input);
+        protected abstract ExcelyTable GetTable(TInput input);
 
         /// <summary>
-        /// 將指定的資料來源匯入為指定資料結構
+        /// 將資料匯入為物件列表
         /// </summary>
+        /// <typeparam name="TClass">目標類別</typeparam>
         /// <param name="dataSource">資料來源</param>
+        /// <param name="options">匯入邏輯</param>
         /// <returns>匯入結果</returns>
         public IEnumerable<TClass> ToClassList<TClass>(
-            TInput dataSource, 
-            ClassListTableConverter<TClass>? converter = null) 
+            TInput dataSource,
+            ClassListTableConverterOptions<TClass>? options = null)
             where TClass : class, new()
         {
             var table = GetTable(dataSource);
-            converter ??= new ClassListTableConverter<TClass>();
+            var converter = options == null ? new ClassListTableConverter<TClass>() : new ClassListTableConverter<TClass>(options);
             return converter.Convert(table);
         }
     }

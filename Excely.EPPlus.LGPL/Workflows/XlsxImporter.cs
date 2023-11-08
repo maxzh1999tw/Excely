@@ -8,8 +8,22 @@ namespace Excely.Workflows
     /// </summary>
     public class XlsxImporter : ExcelyImporter<ExcelWorksheet>
     {
-        public XlsxTableFactory XlsxTableFactory { get; set; } = new XlsxTableFactory();
+        protected XlsxTableFactory XlsxTableFactory { get; set; } = new XlsxTableFactory();
 
-        public override ExcelyTable GetTable(ExcelWorksheet input) => XlsxTableFactory.GetTable(input);
+        #region === 建構子 ==
+        public XlsxImporter() { }
+
+        public XlsxImporter(CellLocation? startCell, CellLocation? endCell)
+        {
+            XlsxTableFactory = new XlsxTableFactory();
+            if(startCell != null)
+            {
+                XlsxTableFactory.StartCell = startCell.Value;
+            }
+            XlsxTableFactory.EndCell = endCell;
+        }
+        #endregion
+
+        protected override ExcelyTable GetTable(ExcelWorksheet input) => XlsxTableFactory.GetTable(input);
     }
 }
