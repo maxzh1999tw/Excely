@@ -5,9 +5,7 @@ VisualStudioVersion = 17.7.34003.232
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Excely", "Excely\Excely.csproj", "{D4C4D335-52CF-4C53-B43E-066F6EF5A519}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Excely.Debug", "Excely.Debug\Excely.Debug.csproj", "{DFE63A6B-4355-48C5-B891-2CA20379C7CE}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Excely.EPPlus.LGPL", "Excely.EPPlus.LGPL\Excely.EPPlus.LGPL.csproj", "{D9AD5FA2-F9A3-440C-800F-E17B871A2D28}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Excely.EPPlus.LGPL", "Excely.EPPlus.LGPL\Excely.EPPlus.LGPL.csproj", "{D9AD5FA2-F9A3-440C-800F-E17B871A2D28}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -19,10 +17,6 @@ Global
 		{D4C4D335-52CF-4C53-B43E-066F6EF5A519}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D4C4D335-52CF-4C53-B43E-066F6EF5A519}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D4C4D335-52CF-4C53-B43E-066F6EF5A519}.Release|Any CPU.Build.0 = Release|Any CPU
-		{DFE63A6B-4355-48C5-B891-2CA20379C7CE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{DFE63A6B-4355-48C5-B891-2CA20379C7CE}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{DFE63A6B-4355-48C5-B891-2CA20379C7CE}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{DFE63A6B-4355-48C5-B891-2CA20379C7CE}.Release|Any CPU.Build.0 = Release|Any CPU
 		{D9AD5FA2-F9A3-440C-800F-E17B871A2D28}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{D9AD5FA2-F9A3-440C-800F-E17B871A2D28}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D9AD5FA2-F9A3-440C-800F-E17B871A2D28}.Release|Any CPU.ActiveCfg = Release|Any CPU

@@ -1,11 +1,5 @@
-﻿using Excely.Shaders;
-using OfficeOpenXml;
-using System;
-using System.Collections.Generic;
+﻿using OfficeOpenXml;
 using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Excely.EPPlus.LGPL.Shaders.Xlsx
 {
@@ -46,7 +40,7 @@ namespace Excely.EPPlus.LGPL.Shaders.Xlsx
         {
             foreach (var cellError in CellErrors)
             {
-                var cell = worksheet.Cells[cellError.Key.Row+1, cellError.Key.Column+1];
+                var cell = worksheet.Cells[cellError.Key.Row + 1, cellError.Key.Column + 1];
                 cell.Style.Font.Color.SetColor(TextColor);
                 cell.AddComment(cellError.Value, Author);
             }

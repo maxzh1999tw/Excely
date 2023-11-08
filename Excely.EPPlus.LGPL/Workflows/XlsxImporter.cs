@@ -16,7 +16,7 @@ namespace Excely.Workflows
         public XlsxImporter(CellLocation? startCell, CellLocation? endCell)
         {
             XlsxTableFactory = new XlsxTableFactory();
-            if(startCell != null)
+            if (startCell != null)
             {
                 XlsxTableFactory.StartCell = startCell.Value;
             }
