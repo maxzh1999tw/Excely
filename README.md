@@ -24,8 +24,9 @@ static void Main(string[] args)
     using var excel = exporter.ToExcel(students);
 
     // 匯入為 List<Student>
+    var worksheet = excel.Workbook.Worksheets.First();
     var importer = new XlsxImporter();
-    IEnumerable<Student> importResult = importer.ToClassList<Student>(excel.Workbook.Worksheets.First());
+    IEnumerable<Student> importResult = importer.ToClassList<Student>(worksheet);
 }
 ```
 
