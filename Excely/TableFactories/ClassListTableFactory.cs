@@ -30,10 +30,12 @@ namespace Excely.TableFactories
                             .OrderBy(x => Options.PropertyOrderPolicy(properties, x))
                             .ToArray();
 
-            var table = new List<IList<object?>>
+            var table = new List<IList<object?>>();
+
+            if (Options.WithSchema)
             {
-                GetSchema(properties)
-            };
+                table.Add(GetSchema(properties));
+            }
 
             foreach (var item in sourceData)
             {
@@ -71,6 +73,12 @@ namespace Excely.TableFactories
     /// <typeparam name="TClass">目標類別</typeparam>
     public class ClassListTableFactoryOptions<TClass>
     {
+        /// <summary>
+        /// 決定匯出時是否帶有表頭。
+        /// 預設為是。
+        /// </summary>
+        public bool WithSchema { get; set; } = true;
+
         /// <summary>
         /// 決定 Property 是否應作為欄位匯出的執行邏輯。
         /// 輸入參數為 PropertyInfo，輸出結果為「是否應作為欄位匯出」，
