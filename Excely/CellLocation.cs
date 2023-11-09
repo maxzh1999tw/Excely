@@ -5,17 +5,17 @@ namespace Excely
     /// <summary>
     /// 代表 Cell 位置的結構。
     /// </summary>
-    public struct CellLocation
+    public readonly struct CellLocation
     {
         /// <summary>
         /// 從 0 開始。
         /// </summary>
-        public int Row { get; set; }
+        public int Row { get; init; }
 
         /// <summary>
         /// 從 0 開始。
         /// </summary>
-        public int Column { get; set; }
+        public int Column { get; init; }
 
         public CellLocation(int row, int column)
         {
