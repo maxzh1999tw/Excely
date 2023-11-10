@@ -1,4 +1,6 @@
-﻿using System.Reflection;
+﻿using System;
+using System.ComponentModel;
+using System.Reflection;
 
 namespace Excely.TableConverters
 {
@@ -81,6 +83,16 @@ namespace Excely.TableConverters
                         var value = Oprions.CustomValuePolicy(property, table.Data[row][col]);
                         try
                         {
+                            var valueType = value?.GetType();
+                            if (Oprions.DoAutoConvert && 
+                                value != null && 
+                                !property.PropertyType.IsAssignableFrom(value.GetType())) {
+                                var typeConverter = TypeDescriptor.GetConverter(property.PropertyType);
+                                if (valueType != null && typeConverter != null && typeConverter.CanConvertFrom(valueType))
+                                {
+                                    value = typeConverter.ConvertFrom(value);
+                                }
+                            }
                             property.SetValue(obj, value);
                         }
                         catch (Exception ex)
@@ -148,5 +160,10 @@ namespace Excely.TableConverters
         /// 預設為不處理錯誤。
         /// </summary>
         public Func<CellLocation, TClass, PropertyInfo, object?, Exception, bool> ErrorHandlingPolicy { get; set; } = (_, _, _, _, _) => false;
+
+        /// <summary>
+        /// 當寫入的值與目標型別不同時，是否自動嘗試轉換。
+        /// </summary>
+        public bool DoAutoConvert { get; set; } = true;
     }
 }
