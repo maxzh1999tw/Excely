@@ -1,4 +1,5 @@
 ﻿using Excely.Shaders;
+using Excely.TableConverters;
 using Excely.TableFactories;
 
 namespace Excely.Workflows
@@ -33,6 +34,40 @@ namespace Excely.Workflows
         /// <param name="sourceData">輸入資料</param>
         /// <returns>ExcelyTable 格式的資料</returns>
         public ExcelyTable GetTable(TInput sourceData) => TableFactory.GetTable(sourceData);
+
+        /// <summary>
+        /// 將輸入資料轉換為 Csv 字串。
+        /// </summary>
+        /// <param name="sourceData">輸入資料</param>
+        /// <returns>Csv 字串</returns>
+        public string ToCsvString(TInput sourceData)
+        {
+            var table = GetTable(sourceData);
+            var tableWriter = new CsvStringTableConverter<string>();
+            var result = tableWriter.Convert(table);
+            foreach (var shaders in Shaders)
+            {
+                result = shaders.Excute(result);
+            }
+            return result;
+        }
+
+        /// <summary>
+        /// 將輸入資料轉換為檔案。
+        /// </summary>
+        /// <param name="sourceData">輸入資料</param>
+        /// <returns>匯出之檔案</returns>
+        public MemoryStream ToCsvFile(TInput sourceData)
+        {
+            var table = GetTable(sourceData);
+            var tableWriter = new CsvStringTableConverter<MemoryStream>();
+            var result = tableWriter.Convert(table);
+            foreach (var shaders in Shaders)
+            {
+                result = shaders.Excute(result);
+            }
+            return result;
+        }
     }
 
     /// <summary>
