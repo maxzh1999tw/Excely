@@ -93,5 +93,23 @@ namespace Excely.Workflows
             }
             return exporter;
         }
+
+        /// <summary>
+        /// 建立一個以 Class list 為輸入資料型別的 ExcelyExporter。
+        /// </summary>
+        /// <typeparam name="TClass">欲轉換的 Class</typeparam>
+        public static ExcelyExporter<IEnumerable<Dictionary<string, object?>>> FromDictionaryList(
+            DictionaryListTableFactoryOptions? options = null,
+            IEnumerable<IShader>? shaders = null)
+        {
+            var tableFactory = options == null ? new DictionaryListTableFactory() : new DictionaryListTableFactory(options);
+
+            var exporter = new ExcelyExporter<IEnumerable<Dictionary<string, object?>>>(tableFactory);
+            if (shaders != null)
+            {
+                exporter.Shaders = shaders;
+            }
+            return exporter;
+        }
     }
 }
