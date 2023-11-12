@@ -23,12 +23,12 @@ namespace Excely.TableConverters
         private static string ConvertToString(ExcelyTable table)
         {
             StringBuilder stringBuilder = new();
-            for(int rowIndex = 0; rowIndex < table.MaxRowCount; rowIndex++)
+            for (int rowIndex = 0; rowIndex < table.MaxRowCount; rowIndex++)
             {
-                for(int colIndex = 0; colIndex < table.MaxColCount; colIndex++) 
+                for (int colIndex = 0; colIndex < table.MaxColCount; colIndex++)
                 {
                     stringBuilder.Append(table.Data[rowIndex][colIndex]?.ToString());
-                    if(colIndex != table.MaxColCount - 1)
+                    if (colIndex != table.MaxColCount - 1)
                     {
                         stringBuilder.Append(',');
                     }

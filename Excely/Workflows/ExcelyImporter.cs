@@ -26,6 +26,21 @@ namespace Excely.Workflows
             var converter = options == null ? new ClassListTableConverter<TClass>() : new ClassListTableConverter<TClass>(options);
             return converter.Convert(table);
         }
+
+        /// <summary>
+        /// 將資料匯入為字典列表
+        /// </summary>=
+        /// <param name="dataSource">資料來源</param>
+        /// <param name="options">匯入邏輯</param>
+        /// <returns>匯入結果</returns>
+        public IEnumerable<Dictionary<string, object?>> ToDictionaryList(
+            TInput dataSource,
+            DictionaryListTableConverterOptions? options = null)
+        {
+            var table = GetTable(dataSource);
+            var converter = options == null ? new DictionaryListTableConverter() : new DictionaryListTableConverter(options);
+            return converter.Convert(table);
+        }
     }
 }
 

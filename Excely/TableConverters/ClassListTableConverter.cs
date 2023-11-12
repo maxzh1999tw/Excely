@@ -1,5 +1,4 @@
-﻿using System;
-using System.ComponentModel;
+﻿using System.ComponentModel;
 using System.Reflection;
 
 namespace Excely.TableConverters
@@ -13,7 +12,7 @@ namespace Excely.TableConverters
         /// <summary>
         /// 轉換過程的執行細節
         /// </summary>
-        protected ClassListTableConverterOptions<TClass> Oprions { get; set; } = new ClassListTableConverterOptions<TClass>();
+        protected ClassListTableConverterOptions<TClass> Options { get; set; } = new ClassListTableConverterOptions<TClass>();
 
         private PropertyInfo[]? _TProperies;
         /// <summary>
@@ -31,9 +30,9 @@ namespace Excely.TableConverters
         #region === 建構子 ===
         public ClassListTableConverter() { }
 
-        public ClassListTableConverter(ClassListTableConverterOptions<TClass> oprions)
+        public ClassListTableConverter(ClassListTableConverterOptions<TClass> options)
         {
-            Oprions = oprions;
+            Options = options;
         }
         #endregion
 
@@ -44,11 +43,11 @@ namespace Excely.TableConverters
         /// <returns>轉換結果</returns>
         public IEnumerable<TClass> Convert(ExcelyTable table)
         {
-            if (Oprions.HasSchema)
+            if (Options.HasSchema)
             {
                 return ImportInternal(table, (property, colIndex) =>
                 {
-                    var name = Oprions.PropertyNamePolicy(property);
+                    var name = Options.PropertyNamePolicy(property);
                     return name == table.Data[0][colIndex]?.ToString();
                 });
             }
@@ -56,7 +55,7 @@ namespace Excely.TableConverters
             {
                 return ImportInternal(table, (property, colIndex) =>
                 {
-                    var index = Oprions.PropertyIndexPolicy(TProperties, property);
+                    var index = Options.PropertyIndexPolicy(TProperties, property);
                     return index == colIndex;
                 });
             }
@@ -71,7 +70,7 @@ namespace Excely.TableConverters
         private IEnumerable<TClass> ImportInternal(ExcelyTable table, Func<PropertyInfo, int, bool> propertyMatcher)
         {
             var result = new List<TClass>(table.MaxRowCount);
-            for (var row = Oprions.HasSchema ? 1 : 0; row < table.MaxRowCount; row++)
+            for (var row = Options.HasSchema ? 1 : 0; row < table.MaxRowCount; row++)
             {
                 var obj = new TClass();
                 var rowParseSuccess = true;
@@ -80,13 +79,14 @@ namespace Excely.TableConverters
                     var property = TProperties.FirstOrDefault(p => propertyMatcher(p, col));
                     if (property != null)
                     {
-                        var value = Oprions.CustomValuePolicy(property, table.Data[row][col]);
+                        var value = Options.CustomValuePolicy(property, table.Data[row][col]);
                         try
                         {
                             var valueType = value?.GetType();
-                            if (Oprions.DoAutoConvert && 
-                                value != null && 
-                                !property.PropertyType.IsAssignableFrom(value.GetType())) {
+                            if (Options.DoAutoConvert &&
+                                value != null &&
+                                !property.PropertyType.IsAssignableFrom(value.GetType()))
+                            {
                                 var typeConverter = TypeDescriptor.GetConverter(property.PropertyType);
                                 if (valueType != null && typeConverter != null && typeConverter.CanConvertFrom(valueType))
                                 {
@@ -97,8 +97,8 @@ namespace Excely.TableConverters
                         }
                         catch (Exception ex)
                         {
-                            var ignore = Oprions.ErrorHandlingPolicy(new CellLocation(row, col), obj, property, value, ex);
-                            if (!ignore && Oprions.StopWhenError)
+                            var ignore = Options.ErrorHandlingPolicy(new CellLocation(row, col), obj, property, value, ex);
+                            if (!ignore && Options.StopWhenError)
                             {
                                 throw;
                             }

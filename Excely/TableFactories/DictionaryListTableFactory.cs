@@ -1,7 +1,13 @@
 ﻿namespace Excely.TableFactories
 {
+    /// <summary>
+    /// 提供以字典 Key 為欄位，將字典集合傾印至表格的功能。
+    /// </summary>
     public class DictionaryListTableFactory : ITableFactory<IEnumerable<Dictionary<string, object?>>>
     {
+        /// <summary>
+        /// 轉換過程的執行細節
+        /// </summary>
         protected DictionaryListTableFactoryOptions Options { get; set; } = new DictionaryListTableFactoryOptions();
 
         #region === 建構子 ===
@@ -38,9 +44,9 @@
         }
 
         /// <summary>
-        /// 將類別結構轉換為表頭。
+        /// 將 Key 轉換為表頭。
         /// </summary>
-        /// <param name="properties">欲匯出的 Properties</param>
+        /// <param name="keys">欲匯出的 Keys</param>
         /// <returns>表頭列</returns>
         private IList<object?> GetSchema(string[] keys)
         {
@@ -48,10 +54,10 @@
         }
 
         /// <summary>
-        /// 將物件轉換為資料列。
+        /// 將字典轉換為資料列。
         /// </summary>
-        /// <param name="item">來源物件</param>
-        /// <param name="properties">欲匯出的 Properties</param>
+        /// <param name="item">來源字典</param>
+        /// <param name="keys">欲匯出的 Keys</param>
         /// <returns>資料列</returns>
         private IList<object?> GetRow(Dictionary<string, object?> item, string[] keys)
         {
