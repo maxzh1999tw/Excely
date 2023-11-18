@@ -24,6 +24,8 @@ namespace Excely.TableFactories
 
         public ExcelyTable GetTable(IEnumerable<TClass> sourceData)
         {
+            if(sourceData == null) throw new ArgumentNullException(nameof(sourceData));
+
             var properties = typeof(TClass).GetProperties();
             properties = properties
                             .Where(x => Options.PropertyShowPolicy(x))
