@@ -59,10 +59,13 @@ namespace Excely.TableFactories
                             // 不合法
                             else
                             {
-                                throw new InvalidCastException("欄位引用符號 '\\\n' 後面必須緊臨欄位分隔符號 ',' 或換行符。");
+                                throw new InvalidCastException("欄位引用符號 '\\\"' 後面必須緊臨欄位分隔符號 ',' 或換行符。");
                             }
                         }
-                        else break;
+                        else
+                        {
+                            isInQuotes = false;
+                        }
                     }
                     else
                     {
@@ -105,6 +108,11 @@ namespace Excely.TableFactories
                 }
             }
 
+            if (isInQuotes)
+            {
+                throw new InvalidCastException("未閉合的引號");
+            }
+
             if (colBuilder.Length > 0)
             {
                 SaveCol(row, colBuilder);
@@ -114,7 +122,13 @@ namespace Excely.TableFactories
                 SaveRow(result, ref row);
             }
 
-            return new ExcelyTable(result);
+            // 刪除空行
+            if(result.Any(row => row.Count > 1))
+            {
+                result = result.Where(x => x.Count != 1).ToList();
+            }
+
+            return new ExcelyTable(result.Where(x => x.Any()).ToArray());
         }
 
         private static void SaveCol(List<object?> row, StringBuilder colBuilder) {

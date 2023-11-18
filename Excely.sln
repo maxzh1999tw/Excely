@@ -7,6 +7,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Excely", "Excely\Excely.csp
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Excely.EPPlus.LGPL", "Excely.EPPlus.LGPL\Excely.EPPlus.LGPL.csproj", "{D9AD5FA2-F9A3-440C-800F-E17B871A2D28}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Excely.UnitTests", "Excely.UnitTests\Excely.UnitTests.csproj", "{11B8A44D-707F-405C-ACDC-2AF4AC8F3D5F}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{D9AD5FA2-F9A3-440C-800F-E17B871A2D28}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D9AD5FA2-F9A3-440C-800F-E17B871A2D28}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D9AD5FA2-F9A3-440C-800F-E17B871A2D28}.Release|Any CPU.Build.0 = Release|Any CPU
+		{11B8A44D-707F-405C-ACDC-2AF4AC8F3D5F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{11B8A44D-707F-405C-ACDC-2AF4AC8F3D5F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{11B8A44D-707F-405C-ACDC-2AF4AC8F3D5F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{11B8A44D-707F-405C-ACDC-2AF4AC8F3D5F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
