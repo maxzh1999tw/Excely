@@ -124,7 +124,7 @@ namespace Excely.UnitTests
         {
             var options = new ClassListTableConverterOptions<SampleClass>
             {
-                CustomValuePolicy = (prop, obj) => prop.Name == "Name" ? obj?.ToString()?.ToUpper() : obj
+                CustomValueSettingPolicy = (prop, obj) => prop.Name == "Name" ? obj?.ToString()?.ToUpper() : obj
             };
             var table = new ExcelyTable(new List<IList<object?>>
             {

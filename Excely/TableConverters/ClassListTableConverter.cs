@@ -45,8 +45,11 @@ namespace Excely.TableConverters
         {
             if (Options.HasSchema)
             {
+                var notConvertProperties = TProperties.Where(p => !Options.PropertyShowPolicy(p)).ToArray();
                 return ImportInternal(table, (property, colIndex) =>
                 {
+                    if (notConvertProperties.Contains(property)) return false;
+
                     var name = Options.PropertyNamePolicy(property);
                     return name == table.Data[0][colIndex]?.ToString();
                 });
@@ -79,7 +82,7 @@ namespace Excely.TableConverters
                     var property = TProperties.FirstOrDefault(p => propertyMatcher(p, col));
                     if (property != null)
                     {
-                        var value = Options.CustomValuePolicy(property, table.Data[row][col]);
+                        var value = table.Data[row][col];
                         try
                         {
                             var valueType = value?.GetType();
@@ -129,7 +132,7 @@ namespace Excely.TableConverters
     {
         /// <summary>
         /// 匯入的 Table 是否含有表頭。
-        /// 當此欄位為 true 時，會使用 PropertyNamePolicy；
+        /// 當此欄位為 true 時，會使用 PropertyNamePolicy 與 PropertyShowPolicy；
         /// 否則會使用 PropertyIndexPolicy。
         /// </summary>
         public bool HasSchema { get; set; } = true;
@@ -139,6 +142,13 @@ namespace Excely.TableConverters
         /// 若此欄為 false，則發生錯誤時會跳過該 Row，繼續執行匯入。
         /// </summary>
         public bool StopWhenError { get; set; } = true;
+
+        /// <summary>
+        /// 決定 Property 是否應作為欄位匯出的執行邏輯。
+        /// 輸入參數為 PropertyInfo，輸出結果為「是否應作為欄位匯出」，
+        /// 預設為全部欄位都匯出。
+        /// </summary>
+        public Func<PropertyInfo, bool> PropertyShowPolicy { get; set; } = _ => true;
 
         /// <summary>
         /// 決定 Property 作為欄位時的名稱。
@@ -156,11 +166,11 @@ namespace Excely.TableConverters
         public Func<PropertyInfo[], PropertyInfo, int?> PropertyIndexPolicy { get; set; } = (props, prop) => Array.IndexOf(props, prop);
 
         /// <summary>
-        /// 決定將值寫入至 Property 時應寫入的值。
-        /// 輸入參數為 (PropertyInfo, 原始值)，輸出結果為「應寫入的值」。
+        /// 決定將值寫入至物件的方式。
+        /// 輸入參數為 (當前物件, PropertyInfo, 欄位值)。
         /// 預設為原值。
         /// </summary>
-        public Func<PropertyInfo, object?, object?> CustomValuePolicy { get; set; } = (prop, obj) => obj;
+        public Action<TClass, PropertyInfo, object?> CustomValueSettingPolicy { get; set; }
 
         /// <summary>
         /// 將值輸入進物件發生錯誤時，決定錯誤處理方式。
@@ -171,7 +181,35 @@ namespace Excely.TableConverters
 
         /// <summary>
         /// 當寫入的值與目標型別不同時，是否自動嘗試轉換。
+        /// 只有在預設 CustomValueSettingPolicy 時生效。
         /// </summary>
         public bool DoAutoConvert { get; set; } = true;
+
+        public ClassListTableConverterOptions()
+        {
+            CustomValueSettingPolicy = (obj, p, value) =>
+            {
+                var valueType = value?.GetType();
+                if (DoAutoConvert &&
+                    value != null &&
+                    !p.PropertyType.IsAssignableFrom(value.GetType()))
+                {
+                    var typeConverter = TypeDescriptor.GetConverter(p.PropertyType);
+                    if (valueType != null && typeConverter != null && typeConverter.CanConvertFrom(valueType))
+                    {
+                        value = typeConverter.ConvertFrom(value);
+                    }
+                    else
+                    {
+                        var convertedValue = Convert.ChangeType(value, p.PropertyType);
+                        if(convertedValue != null)
+                        {
+                            value = convertedValue;
+                        }
+                    }
+                }
+                p.SetValue(obj, value);
+            };
+        }
     }
 }
