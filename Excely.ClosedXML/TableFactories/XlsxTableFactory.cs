@@ -24,7 +24,7 @@ namespace Excely.ClosedXML.TableFactories
             CellLocation realEndCell;
             if (EndCell == null)
             {
-                realEndCell = new CellLocation(input.RowCount(), input.ColumnCount());
+                realEndCell = new CellLocation(input.LastRowUsed().RowNumber(), input.LastColumnUsed().ColumnNumber());
             }
             else
             {
@@ -39,7 +39,47 @@ namespace Excely.ClosedXML.TableFactories
                 List<object?> row = new();
                 for (int c = StartCell.Column + 1; c <= realEndCell.Column; c++)
                 {
-                    row.Add(input.Cell(r, c).Value);
+                    var cell = input.Cell(r, c);
+                    var cellValue = cell.Value;
+                    object? value;
+
+                    if (cellValue.Type == XLDataType.Blank)
+                    {
+                        value = null;
+                    }
+                    else if(cellValue.Type == XLDataType.Text)
+                    {
+                        value = cellValue.GetText();
+                    }
+                    else if(cellValue.Type == XLDataType.Number)
+                    {
+                        if (cell.TryGetValue<decimal>(out var number))
+                        {
+                            value = number;
+                        }
+                        else
+                        {
+                            throw new InvalidCastException();
+                        }
+                    }
+                    else if(cellValue.Type == XLDataType.Boolean)
+                    {
+                        value = cellValue.GetBoolean();
+                    }
+                    else if (cellValue.Type == XLDataType.DateTime)
+                    {
+                        value = cellValue.GetDateTime();
+                    }
+                    else if (cellValue.Type == XLDataType.TimeSpan)
+                    {
+                        value = cellValue.GetTimeSpan();
+                    }
+                    else
+                    {
+                        throw new NotImplementedException();
+                    }
+
+                    row.Add(value);
                 }
                 result.Add(row);
             }
