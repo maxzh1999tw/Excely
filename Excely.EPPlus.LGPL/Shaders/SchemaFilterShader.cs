@@ -17,13 +17,9 @@ namespace Excely.EPPlus.LGPL.Shaders
         /// </summary>
         public CellLocation StartCell { get; set; } = new(0, 0);
 
-        /// <param name="schemaLength">表頭長度</param>
-        public SchemaFilterShader(int schemaLength)
-        {
-            SchemaLength = schemaLength;
-        }
+        public SchemaFilterShader() { }
 
-        /// <param name="schemaLength">表頭長度</param>
+        /// <param name="schemaLength">表頭長度(0 為自適應)</param>
         /// <param name="startCell">表格起始儲存格座標</param>
         public SchemaFilterShader(int schemaLength, CellLocation startCell)
         {
@@ -33,7 +29,12 @@ namespace Excely.EPPlus.LGPL.Shaders
 
         protected override void ExcuteOnWorksheet(ExcelWorksheet target)
         {
-            target.Cells[StartCell.Row + 1, StartCell.Column + 1, StartCell.Row + 1, StartCell.Column + SchemaLength].AutoFilter = true;
+            var schemaLength = SchemaLength;
+            if (schemaLength == 0)
+            {
+                schemaLength = target.Dimension.End.Column;
+            }
+            target.Cells[StartCell.Row + 1, StartCell.Column + 1, StartCell.Row + 1, StartCell.Column + schemaLength].AutoFilter = true;
         }
     }
 }
