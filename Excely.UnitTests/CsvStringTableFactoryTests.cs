@@ -17,7 +17,7 @@ namespace Excely.UnitTests
 
             // Assert
             Assert.AreEqual(1, table.MaxRowCount);
-            Assert.AreEqual(3, table.MaxColCount);
+            Assert.AreEqual(3, table.MaxColumnCount);
             Assert.AreEqual("Id", table.Data[0][0]);
             Assert.AreEqual("Name", table.Data[0][1]);
             Assert.AreEqual("Email", table.Data[0][2]);
@@ -35,7 +35,7 @@ namespace Excely.UnitTests
 
             // Assert
             Assert.AreEqual(3, table.MaxRowCount);
-            Assert.AreEqual(1, table.MaxColCount);
+            Assert.AreEqual(1, table.MaxColumnCount);
             Assert.AreEqual("Id", table.Data[0][0]);
             Assert.AreEqual("1", table.Data[1][0]);
             Assert.AreEqual("2", table.Data[2][0]);
@@ -53,7 +53,7 @@ namespace Excely.UnitTests
 
             // Assert
             Assert.AreEqual(3, table.MaxRowCount);
-            Assert.AreEqual(1, table.MaxColCount);
+            Assert.AreEqual(1, table.MaxColumnCount);
             Assert.AreEqual("Id", table.Data[0][0]);
             Assert.AreEqual("", table.Data[1][0]);
             Assert.AreEqual("2", table.Data[2][0]);
@@ -71,7 +71,7 @@ namespace Excely.UnitTests
 
             // Assert
             Assert.AreEqual(3, table.MaxRowCount); // Including all rows
-            Assert.AreEqual(3, table.MaxColCount); // Three columns
+            Assert.AreEqual(3, table.MaxColumnCount); // Three columns
             Assert.AreEqual("alice@example.com", table.Data[1][2]);
             Assert.AreEqual("bob@example.com", table.Data[2][2]);
         }
@@ -88,7 +88,7 @@ namespace Excely.UnitTests
 
             // Assert
             Assert.AreEqual(0, table.MaxRowCount);
-            Assert.AreEqual(0, table.MaxColCount);
+            Assert.AreEqual(0, table.MaxColumnCount);
         }
 
         [TestMethod]
@@ -103,7 +103,7 @@ namespace Excely.UnitTests
 
             // Assert
             Assert.AreEqual(1, table.MaxRowCount);
-            Assert.AreEqual(3, table.MaxColCount);
+            Assert.AreEqual(3, table.MaxColumnCount);
             Assert.AreEqual("Id, \"Identifier\"", table.Data[0][0]);
             Assert.AreEqual("Name\nFull", table.Data[0][1]);
         }
@@ -150,7 +150,7 @@ namespace Excely.UnitTests
 
             // Assert
             Assert.AreEqual(3, table.MaxRowCount); // 包括所有行（標題行和兩個數據行）
-            Assert.AreEqual(3, table.MaxColCount); // 三列
+            Assert.AreEqual(3, table.MaxColumnCount); // 三列
             Assert.AreEqual("1", table.Data[1][0]); // 檢查第二行的第一列
             Assert.AreEqual("2", table.Data[2][0]); // 檢查第三行的第一列
         }
@@ -168,7 +168,7 @@ namespace Excely.UnitTests
 
             // Assert
             Assert.AreEqual(3, table.MaxRowCount); // 包括所有行（標題行和兩個數據行）
-            Assert.AreEqual(3, table.MaxColCount); // 三列
+            Assert.AreEqual(3, table.MaxColumnCount); // 三列
             Assert.AreEqual("1", table.Data[1][0]); // 檢查第二行的第一列
             Assert.AreEqual("2", table.Data[2][0]); // 檢查第三行的第一列
         }

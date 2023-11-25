@@ -11,6 +11,6 @@
         /// </summary>
         /// <param name="table">來源資料</param>
         /// <returns>匯出結果</returns>
-        TOutput Convert(ExcelyTable table);
+        TOutput ConvertFrom(ExcelyTable table);
     }
 }

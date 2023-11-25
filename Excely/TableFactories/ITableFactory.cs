@@ -7,7 +7,7 @@
     public interface ITableFactory<TInput>
     {
         /// <summary>
-        /// 將指定的物件集合傾印至表格。
+        /// 將指定的資料傾印至表格。
         /// </summary>
         /// <param name="sourceData">來源資料</param>
         /// <returns>表格</returns>

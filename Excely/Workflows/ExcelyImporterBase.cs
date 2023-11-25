@@ -3,15 +3,15 @@
 namespace Excely.Workflows
 {
     /// <summary>
-    /// 提供從資料輸入到轉換為資料結構的完整工作流程。
+    /// 提供從資料輸入到轉換為資料結構的完整工作流程之基底類別。
     /// </summary>
     /// <typeparam name="TInput">資料的輸入型別</typeparam>
-    public abstract class ExcelyImporter<TInput>
+    public abstract class ExcelyImporterBase<TInput>
     {
         protected abstract ExcelyTable GetTable(TInput input);
 
         /// <summary>
-        /// 將資料匯入為物件列表
+        /// 將資料匯入為物件列表。
         /// </summary>
         /// <typeparam name="TClass">目標類別</typeparam>
         /// <param name="dataSource">資料來源</param>
@@ -24,11 +24,11 @@ namespace Excely.Workflows
         {
             var table = GetTable(dataSource);
             var converter = options == null ? new ClassListTableConverter<TClass>() : new ClassListTableConverter<TClass>(options);
-            return converter.Convert(table);
+            return converter.ConvertFrom(table);
         }
 
         /// <summary>
-        /// 將資料匯入為字典列表
+        /// 將資料匯入為字典列表。
         /// </summary>=
         /// <param name="dataSource">資料來源</param>
         /// <param name="options">匯入邏輯</param>
@@ -39,7 +39,7 @@ namespace Excely.Workflows
         {
             var table = GetTable(dataSource);
             var converter = options == null ? new DictionaryListTableConverter() : new DictionaryListTableConverter(options);
-            return converter.Convert(table);
+            return converter.ConvertFrom(table);
         }
     }
 }

@@ -44,12 +44,12 @@ namespace Excely.Example.Console.Exemples
             var importOption = new ClassListTableConverterOptions<SimpleClass>
             {
                 PropertyNamePolicy = p => p.GetDisplayName(),
-                CustomValuePolicy = (p, value) => p.Name switch
+                PropertyValueSettingPolicy = (p, value) => p.Name switch
                 {
                     nameof(SimpleClass.DateTimeField) => value != null ? DateTime.Parse(value.ToString()) : null,
                     nameof(SimpleClass.BoolField) => value != null ? value == "是" : null,
                     _ => value
-                }
+                },
             };
 
             var importedList = importer.ToClassList(worksheet, importOption);

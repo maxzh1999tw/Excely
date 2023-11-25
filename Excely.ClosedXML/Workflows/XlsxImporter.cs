@@ -7,7 +7,7 @@ namespace Excely.ClosedXML.Workflows
     /// <summary>
     /// 提供快速建立從 Excel 到指定資料結構之 Importer 的方法。
     /// </summary>
-    public class XlsxImporter : ExcelyImporter<IXLWorksheet>
+    public class XlsxImporter : ExcelyImporterBase<IXLWorksheet>
     {
         protected XlsxTableFactory XlsxTableFactory { get; set; } = new XlsxTableFactory();
 

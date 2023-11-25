@@ -2,7 +2,10 @@
 
 namespace Excely.Workflows
 {
-    public class CsvStringImporter : ExcelyImporter<string>
+    /// <summary>
+    /// 以 Csv 字串為來源資料的 Importer。
+    /// </summary>
+    public class CsvStringImporter : ExcelyImporterBase<string>
     {
         protected CsvStringTableFactory CsvTableFactory { get; set; } = new();
 

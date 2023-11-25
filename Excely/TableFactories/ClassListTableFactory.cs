@@ -26,6 +26,7 @@ namespace Excely.TableFactories
         {
             if(sourceData == null) throw new ArgumentNullException(nameof(sourceData));
 
+            // 取得要匯出的 Properties
             var properties = typeof(TClass).GetProperties();
             properties = properties
                             .Where(x => Options.PropertyShowPolicy(x))
@@ -34,11 +35,13 @@ namespace Excely.TableFactories
 
             var table = new List<IList<object?>>();
 
+            // 加入表頭
             if (Options.WithSchema)
             {
                 table.Add(GetSchema(properties));
             }
 
+            // 加入資料
             foreach (var item in sourceData)
             {
                 table.Add(GetRow(item, properties));
@@ -70,7 +73,7 @@ namespace Excely.TableFactories
     }
 
     /// <summary>
-    /// 定義一組 ClassListTableFactory 的執行細節
+    /// 定義一組 ClassListTableFactory 的執行細節。
     /// </summary>
     /// <typeparam name="TClass">目標類別</typeparam>
     public class ClassListTableFactoryOptions<TClass>
@@ -97,10 +100,10 @@ namespace Excely.TableFactories
 
         /// <summary>
         /// 決定 Property 作為欄位時的順序。
-        /// 輸入參數為 (所有Property, 當前PropertyInfo)，輸出結果為「排序(由小到大)」，
+        /// 輸入參數為 (所有Properties, 當前PropertyInfo)，輸出結果為「排序(由小到大)」，
         /// 預設為依類別內預設排序。
         /// </summary>
-        public Func<PropertyInfo[], PropertyInfo, int> PropertyOrderPolicy { get; set; } = (propertys, p) => Array.IndexOf(propertys, p);
+        public Func<PropertyInfo[], PropertyInfo, int> PropertyOrderPolicy { get; set; } = (properties, p) => Array.IndexOf(properties, p);
 
         /// <summary>
         /// 決定資料寫入欄位時的值。

@@ -16,7 +16,7 @@ namespace Excely.Workflows
         protected ITableFactory<TInput> TableFactory { get; set; }
 
         /// <summary>
-        /// 取得匯出結果後依序執行的 IShaders
+        /// 取得匯出結果後依序執行的 IShaders。
         /// </summary>
         public IEnumerable<IShader> Shaders { get; set; } = Enumerable.Empty<IShader>();
 
@@ -44,7 +44,7 @@ namespace Excely.Workflows
         {
             var table = GetTable(sourceData);
             var tableWriter = new CsvStringTableConverter<string>();
-            var result = tableWriter.Convert(table);
+            var result = tableWriter.ConvertFrom(table);
             foreach (var shaders in Shaders)
             {
                 result = shaders.Excute(result);
@@ -61,7 +61,7 @@ namespace Excely.Workflows
         {
             var table = GetTable(sourceData);
             var tableWriter = new CsvStringTableConverter<MemoryStream>();
-            var result = tableWriter.Convert(table);
+            var result = tableWriter.ConvertFrom(table);
             foreach (var shaders in Shaders)
             {
                 result = shaders.Excute(result);

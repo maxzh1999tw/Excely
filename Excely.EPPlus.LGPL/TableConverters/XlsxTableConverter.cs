@@ -29,7 +29,7 @@ namespace Excely.EPPlus.LGPL.TableConverters
             StartCell = startCell;
         }
 
-        public ExcelWorksheet Convert(ExcelyTable table)
+        public ExcelWorksheet ConvertFrom(ExcelyTable table)
         {
             int rowPointer = StartCell.Row;
             foreach (var rowData in table.Data)

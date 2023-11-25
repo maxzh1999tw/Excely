@@ -26,7 +26,7 @@ namespace Excely.UnitTests
 
             // Assert
             Assert.AreEqual(2, table.MaxRowCount); // Including schema
-            Assert.AreEqual(2, table.MaxColCount); // Id and Name
+            Assert.AreEqual(2, table.MaxColumnCount); // Id and Name
             Assert.AreEqual("Id", table.Data[0][0]);
             Assert.AreEqual("Name", table.Data[0][1]);
         }
@@ -65,7 +65,7 @@ namespace Excely.UnitTests
 
             // Assert
             Assert.AreEqual(2, table.MaxRowCount); // Including schema
-            Assert.AreEqual(1, table.MaxColCount); // Only Name
+            Assert.AreEqual(1, table.MaxColumnCount); // Only Name
             Assert.AreEqual("Alice", table.Data[1][0]);
         }
 

@@ -2,21 +2,28 @@
 
 namespace Excely.TableFactories
 {
+    /// <summary>
+    /// 將 Csv 字串轉換為 Table。
+    /// </summary>
     public class CsvStringTableFactory : ITableFactory<string>
     {
         public ExcelyTable GetTable(string sourceData)
         {
             var result = new List<IList<object?>>();
             var row = new List<object?>();
-            StringBuilder colBuilder = new();
+            StringBuilder columnBuilder = new();
 
             bool isInQuotes = false;
+
+            // 遍歷字元
             for (int i = 0; i < sourceData.Length; i++)
             {
                 var currentChar = sourceData[i];
 
+                // 若在引號欄位中
                 if (isInQuotes)
                 {
+                    // 遇到 "，不是跳脫字元 "" 就是欄位結尾
                     if (currentChar == '\"')
                     {
                         if (i < sourceData.Length - 1)
@@ -26,7 +33,7 @@ namespace Excely.TableFactories
                             // 拖逸
                             if (nextChar == '\"')
                             {
-                                colBuilder.Append(currentChar);
+                                columnBuilder.Append(currentChar);
                                 i++;
                             }
 
@@ -34,7 +41,7 @@ namespace Excely.TableFactories
                             else if (nextChar == ',')
                             {
                                 isInQuotes = false;
-                                SaveCol(row, colBuilder);
+                                SaveColumn(row, columnBuilder);
                                 i++;
                             }
 
@@ -42,7 +49,7 @@ namespace Excely.TableFactories
                             else if (nextChar == '\n')
                             {
                                 isInQuotes = false;
-                                SaveCol(row, colBuilder);
+                                SaveColumn(row, columnBuilder);
                                 SaveRow(result, ref row);
                                 i++;
                             }
@@ -51,7 +58,7 @@ namespace Excely.TableFactories
                             else if (i < sourceData.Length - 2 && sourceData.Substring(i + 1, 2) == "\r\n")
                             {
                                 isInQuotes = false;
-                                SaveCol(row, colBuilder);
+                                SaveColumn(row, columnBuilder);
                                 SaveRow(result, ref row);
                                 i += 2;
                             }
@@ -59,17 +66,20 @@ namespace Excely.TableFactories
                             // 不合法
                             else
                             {
-                                throw new InvalidCastException("欄位引用符號 '\\\"' 後面必須緊臨欄位分隔符號 ',' 或換行符。");
+                                throw new InvalidCastException("欄位引用符號 (\") 必須代表欄位結尾，或跳脫字元組 (\"\")。");
                             }
                         }
+                        // 此為欄位結尾，同時也是字串結尾
                         else
                         {
                             isInQuotes = false;
                         }
                     }
+                    
+                    // 其餘字元一律視為文字
                     else
                     {
-                        colBuilder.Append(currentChar);
+                        columnBuilder.Append(currentChar);
                     }
                 }
                 else
@@ -83,39 +93,42 @@ namespace Excely.TableFactories
                     // 換欄位
                     else if (currentChar == ',')
                     {
-                        SaveCol(row, colBuilder);
+                        SaveColumn(row, columnBuilder);
                     }
 
                     // 換行
                     else if (currentChar == '\n')
                     {
-                        SaveCol(row, colBuilder);
+                        SaveColumn(row, columnBuilder);
                         SaveRow(result, ref row);
                     }
 
                     // 換行
                     else if (i < sourceData.Length - 2 && sourceData.Substring(i + 1, 2) == "\r\n")
                     {
-                        SaveCol(row, colBuilder);
+                        SaveColumn(row, columnBuilder);
                         SaveRow(result, ref row);
                         i++;
                     }
 
+                    // 其餘字元一律視為文字
                     else
                     {
-                        colBuilder.Append(currentChar);
+                        columnBuilder.Append(currentChar);
                     }
                 }
             }
 
+            // 字串結束後必須不在引號中
             if (isInQuotes)
             {
-                throw new InvalidCastException("未閉合的引號");
+                throw new InvalidCastException("Csv 格式錯誤：未閉合的引號。");
             }
 
-            if (colBuilder.Length > 0)
+            // 最後一欄與最後一列可能沒有被加入到結果中，補上
+            if (columnBuilder.Length > 0)
             {
-                SaveCol(row, colBuilder);
+                SaveColumn(row, columnBuilder);
             }
             if (row.Any())
             {
@@ -131,7 +144,7 @@ namespace Excely.TableFactories
             return new ExcelyTable(result.Where(x => x.Any()).ToArray());
         }
 
-        private static void SaveCol(List<object?> row, StringBuilder colBuilder) {
+        private static void SaveColumn(List<object?> row, StringBuilder colBuilder) {
             row.Add(colBuilder.ToString());
             colBuilder.Clear();
         }

@@ -1,12 +1,12 @@
 ﻿namespace Excely.TableConverters
 {
     /// <summary>
-    /// 將 Table 轉換為字典列表
+    /// 將 Table 轉換為字典列表。
     /// </summary>
     public class DictionaryListTableConverter : ITableConverter<IEnumerable<Dictionary<string, object?>>>
     {
         /// <summary>
-        /// 轉換過程的執行細節
+        /// 轉換過程的執行細節。
         /// </summary>
         protected DictionaryListTableConverterOptions Options { get; set; } = new DictionaryListTableConverterOptions();
 
@@ -23,11 +23,13 @@
         /// 將指定的 Table 轉換為 Dictionary list。
         /// </summary>
         /// <returns>轉換結果</returns>
-        public IEnumerable<Dictionary<string, object?>> Convert(ExcelyTable table)
+        public IEnumerable<Dictionary<string, object?>> ConvertFrom(ExcelyTable table)
         {
-            var keys = new string?[table.MaxColCount];
+            // 取得 key 集合
+            var keys = new string?[table.MaxColumnCount];
             if (Options.HasSchema)
             {
+                // 有表頭時，會傳入欄位名稱
                 var schema = table.Data[0];
                 for (int i = 0; i < keys.Length; i++)
                 {
@@ -36,6 +38,7 @@
             }
             else
             {
+                // 沒表頭時只傳欄位 index
                 for (int i = 0; i < keys.Length; i++)
                 {
                     keys[i] = Options.CustomKeyNamePolicy(i, null);
@@ -43,16 +46,25 @@
             }
 
             var result = new List<Dictionary<string, object?>>();
-            for (var row = Options.HasSchema ? 1 : 0; row < table.MaxRowCount; row++)
+
+            // 遍歷每一 Row
+            for (var rowIndex = Options.HasSchema ? 1 : 0; rowIndex < table.MaxRowCount; rowIndex++)
             {
+                // 建立新 Dictionary
                 var dict = new Dictionary<string, object?>();
-                for (var col = 0; col < table.MaxColCount; col++)
+
+                // 遍歷每一 Column
+                for (var columnIndex = 0; columnIndex < table.MaxColumnCount; columnIndex++)
                 {
-                    var key = keys[col];
+                    // 取得欄位對應的 Key
+                    var key = keys[columnIndex];
+
+                    // 若為 null 代表不轉換此欄位
                     if (key == null) continue;
 
-                    dict.Add(key, Options.CustomValuePolicy(key, table.Data[row][col]));
+                    dict.Add(key, Options.CustomValuePolicy(key, table.Data[rowIndex][columnIndex]));
                 }
+
                 result.Add(dict);
             }
 
@@ -61,7 +73,7 @@
     }
 
     /// <summary>
-    /// 定義一組 DictionaryListTableConverter 的執行細節
+    /// 定義一組 DictionaryListTableConverter 的執行細節。
     /// </summary>
     public class DictionaryListTableConverterOptions
     {

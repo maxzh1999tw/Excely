@@ -6,7 +6,7 @@
     public class DictionaryListTableFactory : ITableFactory<IEnumerable<Dictionary<string, object?>>>
     {
         /// <summary>
-        /// 轉換過程的執行細節
+        /// 轉換過程的執行細節。
         /// </summary>
         protected DictionaryListTableFactoryOptions Options { get; set; } = new DictionaryListTableFactoryOptions();
 

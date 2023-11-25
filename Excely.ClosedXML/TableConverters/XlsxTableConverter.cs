@@ -29,7 +29,7 @@ namespace Excely.ClosedXML.TableConverters
             StartCell = startCell;
         }
 
-        public IXLWorksheet Convert(ExcelyTable table)
+        public IXLWorksheet ConvertFrom(ExcelyTable table)
         {
             int rowPointer = StartCell.Row;
             foreach (var rowData in table.Data)

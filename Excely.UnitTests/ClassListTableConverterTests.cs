@@ -31,7 +31,7 @@ namespace Excely.UnitTests
             var converter = new ClassListTableConverter<SampleClass>();
 
             // Act
-            var result = converter.Convert(table).ToList();
+            var result = converter.ConvertFrom(table).ToList();
 
             // Assert
             Assert.AreEqual(2, result.Count);
@@ -53,7 +53,7 @@ namespace Excely.UnitTests
             var converter = new ClassListTableConverter<SampleClass>();
 
             // Act
-            var result = converter.Convert(table).ToList();
+            var result = converter.ConvertFrom(table).ToList();
 
             // Assert
             Assert.AreEqual(1, result.Count);
@@ -76,7 +76,7 @@ namespace Excely.UnitTests
             var converter = new ClassListTableConverter<SampleClass>();
 
             // Act
-            converter.Convert(table).ToList();
+            converter.ConvertFrom(table).ToList();
         }
 
         [TestMethod]
@@ -93,7 +93,7 @@ namespace Excely.UnitTests
             });
             var converter = new ClassListTableConverter<SampleClass>(options);
 
-            var result = converter.Convert(table).FirstOrDefault();
+            var result = converter.ConvertFrom(table).FirstOrDefault();
 
             Assert.IsNotNull(result);
             Assert.AreEqual("Item 1", result.Name);
@@ -113,7 +113,7 @@ namespace Excely.UnitTests
             });
             var converter = new ClassListTableConverter<SampleClass>(options);
 
-            var result = converter.Convert(table).FirstOrDefault();
+            var result = converter.ConvertFrom(table).FirstOrDefault();
 
             Assert.IsNotNull(result);
             Assert.AreEqual("Item 1", result.Name);
@@ -124,7 +124,7 @@ namespace Excely.UnitTests
         {
             var options = new ClassListTableConverterOptions<SampleClass>
             {
-                CustomValuePolicy = (prop, obj) => prop.Name == "Name" ? obj?.ToString()?.ToUpper() : obj
+                PropertyValueSettingPolicy = (prop, obj) => prop.Name == "Name" ? obj?.ToString()?.ToUpper() : obj
             };
             var table = new ExcelyTable(new List<IList<object?>>
             {
@@ -133,7 +133,7 @@ namespace Excely.UnitTests
             });
             var converter = new ClassListTableConverter<SampleClass>(options);
 
-            var result = converter.Convert(table).FirstOrDefault();
+            var result = converter.ConvertFrom(table).FirstOrDefault();
 
             Assert.IsNotNull(result);
             Assert.AreEqual("ITEM", result.Name);
@@ -153,7 +153,7 @@ namespace Excely.UnitTests
             });
             var converter = new ClassListTableConverter<SampleClass>(options);
 
-            var result = converter.Convert(table).ToList();
+            var result = converter.ConvertFrom(table).ToList();
 
             Assert.AreEqual(0, result.Count);  // 預期忽略錯誤的行不會被添加
         }
@@ -172,7 +172,7 @@ namespace Excely.UnitTests
             });
             var converter = new ClassListTableConverter<SampleClass>(options);
 
-            var result = converter.Convert(table).ToList();
+            var result = converter.ConvertFrom(table).ToList();
 
             Assert.AreEqual(2, result.Count);  // 包括標題行和數據行
         }
