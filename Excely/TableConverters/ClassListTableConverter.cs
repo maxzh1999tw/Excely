@@ -92,6 +92,14 @@ namespace Excely.TableConverters
                                 {
                                     value = typeConverter.ConvertFrom(value);
                                 }
+                                else
+                                {
+                                    var convertedValue = System.Convert.ChangeType(value, property.PropertyType);
+                                    if (convertedValue != null)
+                                    {
+                                        value = convertedValue;
+                                    }
+                                }
                             }
                             property.SetValue(obj, value);
                         }
