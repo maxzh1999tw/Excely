@@ -110,7 +110,8 @@ namespace Excely.TableConverters
                                 {
                                     value = typeConverter.ConvertFrom(value);
                                 }
-                                else // 嘗試強制轉型
+                                else if (value is IConvertible && 
+                                    property.PropertyType.GetInterface(nameof(IConvertible)) != null) // 嘗試強制轉型
                                 {
                                     var convertedValue = Convert.ChangeType(value, property.PropertyType);
                                     if (convertedValue != null)
@@ -118,6 +119,7 @@ namespace Excely.TableConverters
                                         value = convertedValue;
                                     }
                                 }
+
                             }
                         }
 
@@ -177,7 +179,7 @@ namespace Excely.TableConverters
 
         /// <summary>
         /// 決定 Property 出現在表頭時的位置。
-        /// 輸入參數為 PropertyInfo，輸出結果為「欄位索引」，
+        /// 輸入參數為 (所有Properties, PropertyInfo)，輸出結果為「欄位索引」，
         /// 若該 Property 沒有出現在表頭中，請回傳 null。
         /// 預設為依照 property 預設順序排序。
         /// </summary>
