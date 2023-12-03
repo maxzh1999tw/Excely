@@ -1,3 +1,5 @@
+<img src="https://github.com/maxzh1999tw/Excely/blob/main/logo/Excely.png?raw=true" alt="image" width="300" height="auto">
+
 # Excely
 一個基於 .NET 6 的套件，用於簡化各種常用資料結構與 Excel、Csv 之間的資料匯出及匯入。
 
