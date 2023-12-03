@@ -113,11 +113,15 @@ namespace Excely.TableConverters
                                 else if (value is IConvertible && 
                                     property.PropertyType.GetInterface(nameof(IConvertible)) != null) // 嘗試強制轉型
                                 {
-                                    var convertedValue = Convert.ChangeType(value, property.PropertyType);
-                                    if (convertedValue != null)
+                                    try
                                     {
-                                        value = convertedValue;
+                                        var convertedValue = Convert.ChangeType(value, property.PropertyType);
+                                        if (convertedValue != null)
+                                        {
+                                            value = convertedValue;
+                                        }
                                     }
+                                    catch { }
                                 }
 
                             }

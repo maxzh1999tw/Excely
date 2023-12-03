@@ -431,8 +431,8 @@ namespace Excely.UnitTests
             var table = new ExcelyTable(new List<IList<object?>>
             {
                 new List<object?> { "IntValue", "StrigValue", "DateTimeValue", "EnumValue" },
-                new List<object?> { 1, "Text1", "2023/1/1", SampleEnum.Enum1 },
-                new List<object?> { 2, "Text2", "2023/1/2", SampleEnum.Enum2 },
+                new List<object?> { 1.0, "Text1", "2023/1/1", SampleEnum.Enum1 },
+                new List<object?> { 2.0, "Text2", "2023/1/2", SampleEnum.Enum2 },
             });
             var converter = new ClassListTableConverter<SimpleClass>();
 
@@ -443,7 +443,7 @@ namespace Excely.UnitTests
             Assert.AreEqual(2, result.Count);
             for (int i = 0; i < result.Count; i++)
             {
-                Assert.AreEqual(table.Data[i + 1][0], result[i].IntValue);
+                Assert.AreEqual(table.Data[i + 1][0], (double)result[i].IntValue);
                 Assert.AreEqual(table.Data[i + 1][1], result[i].StrigValue);
 #pragma warning disable CS8600 // 正在將 Null 常值或可能的 Null 值轉換為不可為 Null 的型別。
 #pragma warning disable CS8604 // 可能有 Null 參考引數。
