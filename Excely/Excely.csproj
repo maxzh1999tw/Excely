@@ -4,9 +4,9 @@
     <TargetFramework>net6.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
-    <GeneratePackageOnBuild>False</GeneratePackageOnBuild>
+    <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
     <Authors>Max Zheng</Authors>
-    <PackageReadmeFile>README.md</PackageReadmeFile>
+    <PackageReadmeFile>README_NuGet.md</PackageReadmeFile>
     <RepositoryUrl>https://github.com/maxzh1999tw/Excely</RepositoryUrl>
     <NeutralLanguage>zh-TW</NeutralLanguage>
     <Description>輕鬆處理 Excel、CSV 的匯入匯出。</Description>
@@ -14,14 +14,23 @@
     <PackageProjectUrl>https://github.com/maxzh1999tw/Excely</PackageProjectUrl>
     <PackageTags>excel,csv,import,export</PackageTags>
     <PackageIcon>Excely-128x128.png</PackageIcon>
+    <Version>0.1.0-alpha</Version>
+    <PackageLicenseFile>LICENSE</PackageLicenseFile>
+    <RepositoryType>git</RepositoryType>
+    <PackageReleaseNotes>預覽版本</PackageReleaseNotes>
+    <PackageRequireLicenseAcceptance>False</PackageRequireLicenseAcceptance>
   </PropertyGroup>
 
   <ItemGroup>
+    <None Include="..\LICENSE">
+      <Pack>True</Pack>
+      <PackagePath>\</PackagePath>
+    </None>
     <None Include="..\logo\Excely-128x128.png">
       <Pack>True</Pack>
       <PackagePath>\</PackagePath>
     </None>
-    <None Include="..\README.md">
+    <None Include="..\README_NuGet.md">
       <Pack>True</Pack>
       <PackagePath>\</PackagePath>
     </None>

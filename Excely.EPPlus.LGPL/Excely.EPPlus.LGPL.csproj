@@ -4,7 +4,35 @@
     <TargetFramework>net6.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
+    <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
+    <PackageLicenseFile>LICENSE</PackageLicenseFile>
+    <Version>0.1.0-alpha</Version>
+    <Authors>Max Zheng</Authors>
+    <Description>Excely 的 EPPlus 擴展，以最後一版 LGPL 的 EPPlus 來處理 Excel 檔案。</Description>
+    <Copyright>Copyright (c) MaxZheng 2023</Copyright>
+    <PackageProjectUrl>https://github.com/maxzh1999tw/Excely</PackageProjectUrl>
+    <PackageIcon>Excely-128x128.png</PackageIcon>
+    <PackageReadmeFile>README_NuGet.md</PackageReadmeFile>
+    <RepositoryUrl>https://github.com/maxzh1999tw/Excely</RepositoryUrl>
+    <RepositoryType>git</RepositoryType>
+    <PackageTags>excel,csv,import,export</PackageTags>
+    <PackageReleaseNotes>預覽版本</PackageReleaseNotes>
   </PropertyGroup>
+
+  <ItemGroup>
+    <None Include="..\LICENSE">
+      <Pack>True</Pack>
+      <PackagePath>\</PackagePath>
+    </None>
+    <None Include="..\logo\Excely-128x128.png">
+      <Pack>True</Pack>
+      <PackagePath>\</PackagePath>
+    </None>
+    <None Include="..\README_NuGet.md">
+      <Pack>True</Pack>
+      <PackagePath>\</PackagePath>
+    </None>
+  </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="EPPlus" Version="4.5.3.3" />
