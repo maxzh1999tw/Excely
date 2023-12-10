@@ -18,7 +18,6 @@ namespace Excely.ClosedXML.Shaders
         public XLColor TextColor { get; set; } = XLColor.Red;
 
         /// <param name="errorCells">匯入錯誤資料</param>
-        /// <param name="author">Comment 作者(不得為空)</param>
         public ErrorMarkShader(Dictionary<CellLocation, string> errorCells)
         {
             CellErrors = errorCells;

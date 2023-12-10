@@ -47,7 +47,7 @@ namespace Excely.Example.Console.Exemples
                 PropertyValueSettingPolicy = (p, value) => p.Name switch
                 {
                     nameof(SimpleClass.DateTimeField) => value != null ? DateTime.Parse(value.ToString()) : null,
-                    nameof(SimpleClass.BoolField) => value != null ? value == "是" : null,
+                    nameof(SimpleClass.BoolField) => value != null ? value?.ToString() == "是" : null,
                     _ => value
                 },
             };
