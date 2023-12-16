@@ -96,6 +96,6 @@
         /// 輸入參數為 (Key, 原始值)，輸出結果為「應寫入的值」。
         /// 預設為原值。
         /// </summary>
-        public Func<string, object?, object?> CustomValuePolicy { get; set; } = (key, obj) => obj;
+        public Func<string, object?, object?> CustomValuePolicy { get; set; } = (key, value) => value;
     }
 }

@@ -104,9 +104,9 @@ namespace Excely.UnitTests
             // Arrange
             var table = new ExcelyTable(new List<IList<object?>>
             {
-                new List<object?> { "數字", "文字", "日期", "Enum" },
-                new List<object?> { 1, "Text1", DateTime.Parse("2023/1/1"), SampleEnum.Enum1 },
-                new List<object?> { 2, "Text2", DateTime.Parse("2023/1/2"), SampleEnum.Enum2 },
+                new List<object?> { "數字", "文字", "日期", "Enum", null },
+                new List<object?> { 1, "Text1", DateTime.Parse("2023/1/1"), SampleEnum.Enum1, "Ignored" },
+                new List<object?> { 2, "Text2", DateTime.Parse("2023/1/2"), SampleEnum.Enum2, "Ignored" },
             });
             var options = new ClassListTableConverterOptions<SimpleClass>
             {
