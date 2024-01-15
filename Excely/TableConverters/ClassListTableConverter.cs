@@ -169,7 +169,7 @@ namespace Excely.TableConverters
         public bool HasSchema { get; set; } = true;
 
         /// <summary>
-        /// 當轉換發生錯誤時是否立刻停止。
+        /// 當轉換發生錯誤時是否立刻擲出異常。
         /// 若此欄為 false，則發生錯誤時會跳過該 Row，繼續執行匯入。
         /// </summary>
         public bool ThrowWhenError { get; set; } = true;

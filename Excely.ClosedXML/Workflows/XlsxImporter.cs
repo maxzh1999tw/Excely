@@ -2,7 +2,7 @@
 using Excely.ClosedXML.TableFactories;
 using Excely.Workflows;
 
-namespace Excely.ClosedXML.Workflows
+namespace Excely.Workflows
 {
     /// <summary>
     /// 提供快速建立從 Excel 到指定資料結構之 Importer 的方法。

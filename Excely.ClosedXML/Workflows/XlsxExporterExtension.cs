@@ -2,7 +2,7 @@
 using Excely.ClosedXML.TableConverters;
 using Excely.Workflows;
 
-namespace Excely.ClosedXML.Workflows
+namespace Excely.Workflows
 {
     public static class XlsxExporterExtension
     {
