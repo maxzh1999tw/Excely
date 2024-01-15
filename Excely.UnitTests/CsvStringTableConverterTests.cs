@@ -1,10 +1,5 @@
-﻿using Excely.TableFactories;
-using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using Excely.TableConverters;
 using System.Text;
-using System.Threading.Tasks;
-using Excely.TableConverters;
 
 namespace Excely.UnitTests
 {
@@ -28,7 +23,7 @@ namespace Excely.UnitTests
 
             // Assert
             Assert.AreEqual(
-                $"Name,Surname,Age{Environment.NewLine}John,Doe,30{Environment.NewLine}Jane,Doe,", 
+                $"Name,Surname,Age{Environment.NewLine}John,Doe,30{Environment.NewLine}Jane,Doe,",
                 csvString);
         }
 

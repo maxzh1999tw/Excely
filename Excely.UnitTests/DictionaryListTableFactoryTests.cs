@@ -11,12 +11,12 @@ namespace Excely.UnitTests
             // Arrange
             var factory = new DictionaryListTableFactory();
             var testData = new List<Dictionary<string, object?>>
-            { 
-                new Dictionary<string, object?> 
-                { 
-                    { "Id", 1 }, 
-                    { "Name", "Alice" } 
-                } 
+            {
+                new Dictionary<string, object?>
+                {
+                    { "Id", 1 },
+                    { "Name", "Alice" }
+                }
             };
 
             // Act

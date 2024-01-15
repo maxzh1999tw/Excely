@@ -75,7 +75,7 @@ namespace Excely.TableFactories
                             isInQuotes = false;
                         }
                     }
-                    
+
                     // 其餘字元一律視為文字
                     else
                     {
@@ -136,7 +136,7 @@ namespace Excely.TableFactories
             }
 
             // 刪除空行
-            if(result.Any(row => row.Count > 1))
+            if (result.Any(row => row.Count > 1))
             {
                 result = result.Where(x => x.Count != 1).ToList();
             }
@@ -144,12 +144,13 @@ namespace Excely.TableFactories
             return new ExcelyTable(result.Where(x => x.Any()).ToArray());
         }
 
-        private static void SaveColumn(List<object?> row, StringBuilder colBuilder) {
+        private static void SaveColumn(List<object?> row, StringBuilder colBuilder)
+        {
             row.Add(colBuilder.ToString());
             colBuilder.Clear();
         }
 
-        private static void SaveRow(List<IList<object?>> result, ref List<object?> row) 
+        private static void SaveRow(List<IList<object?>> result, ref List<object?> row)
         {
             result.Add(row);
             row = new List<object?>();

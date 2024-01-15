@@ -46,7 +46,7 @@ namespace Excely.ClosedXML.Shaders
         protected override void ExcuteOnWorksheet(IXLWorksheet worksheet)
         {
             var tableWidth = TableWidth;
-            if(TableWidth == 0)
+            if (TableWidth == 0)
             {
                 tableWidth = worksheet.LastColumnUsed().ColumnNumber();
             }

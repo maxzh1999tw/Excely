@@ -110,7 +110,7 @@ namespace Excely.TableConverters
                                 {
                                     value = typeConverter.ConvertFrom(value);
                                 }
-                                else if (value is IConvertible && 
+                                else if (value is IConvertible &&
                                     property.PropertyType.GetInterface(nameof(IConvertible)) != null) // 嘗試強制轉型
                                 {
                                     try

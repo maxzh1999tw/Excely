@@ -24,7 +24,7 @@ namespace Excely.TableFactories
 
         public ExcelyTable GetTable(IEnumerable<TClass> sourceData)
         {
-            if(sourceData == null) throw new ArgumentNullException(nameof(sourceData));
+            if (sourceData == null) throw new ArgumentNullException(nameof(sourceData));
 
             // 取得要匯出的 Properties
             var properties = typeof(TClass).GetProperties();
