@@ -1,4 +1,7 @@
-﻿namespace Excely.TableFactories
+﻿using System.Formats.Asn1;
+using System.Reflection;
+
+namespace Excely.TableFactories
 {
     /// <summary>
     /// 提供以字典 Key 為欄位，將字典集合傾印至表格的功能。
@@ -74,31 +77,61 @@
         public bool WithSchema { get; set; } = true;
 
         /// <summary>
-        /// 決定 key 是否應作為欄位匯出的執行邏輯。
-        /// 輸入參數為 key，輸出結果為「是否應作為欄位匯出」，
+        /// 決定 key 是否應作為欄位匯出。
         /// 預設為全部欄位都匯出。
         /// </summary>
-        public Func<string, bool> KeyShowPolicy { get; set; } = _ => true;
+        public KeyShowPolicyDelegate KeyShowPolicy { get; set; } = _ => true;
 
         /// <summary>
         /// 決定 key 作為欄位時的名稱。
-        /// 輸入參數為 key，輸出結果為「欄位名稱」，
         /// 預設為 key。
         /// </summary>
-        public Func<string, string?> KeyNamePolicy { get; set; } = k => k;
+        public KeyNamePolicyDelegate KeyNamePolicy { get; set; } = key => key;
 
         /// <summary>
-        /// 決定 key 作為欄位時的順序。
-        /// 輸入參數為 (所有key(預設排序), key)，輸出結果為「排序(由小到大)」，
-        /// 預設為依 key 出現順序排序。
+        /// 決定 key 作為欄位時的權重(越小越靠前)。
+        /// 預設為 key 的預設順序。
         /// </summary>
-        public Func<string[], string, int> KeyOrderPolicy { get; set; } = (keys, k) => Array.IndexOf(keys, k);
+        public KeyOrderPolicyDelegate KeyOrderPolicy { get; set; } = (allKeys, key) => Array.IndexOf(allKeys, key);
 
         /// <summary>
         /// 決定資料寫入欄位時的值。
-        /// 輸入參數為 (key, 當前匯出物件)，輸出結果為「欲寫入欄位的值」，
         /// 預設為 Value。
         /// </summary>
-        public Func<string, Dictionary<string, object?>, object?> CustomValuePolicy { get; set; } = (k, dict) => dict.GetValueOrDefault(k, null);
+        public CustomValuePolicyDelegate CustomValuePolicy { get; set; } = (key, dict) => dict.GetValueOrDefault(key, null);
+
+        #region ===== Policy delegates =====
+
+        /// <summary>
+        /// 決定 key 是否應作為欄位匯出。
+        /// </summary>
+        /// <param name="key">當前決定的 key</param>
+        /// <returns>是否應匯出</returns>
+        public delegate bool KeyShowPolicyDelegate(string key);
+
+        /// <summary>
+        /// 決定 key 作為欄位時的名稱。
+        /// </summary>
+        /// <param name="key">當前決定的 key</param>
+        /// <returns>欄位名稱</returns>
+        public delegate string? KeyNamePolicyDelegate(string key);
+
+        /// <summary>
+        /// 決定 key 作為欄位時的權重(越小越靠前)。
+        /// </summary>
+        /// <param name="allKeys">所有 key</param>
+        /// <param name="key">當前決定的 key</param>
+        /// <returns>欄位權重</returns>
+        public delegate int KeyOrderPolicyDelegate(string[] allKeys, string key);
+
+        /// <summary>
+        /// 決定資料寫入欄位時的值。
+        /// </summary>
+        /// <param name="key">當前決定的 key</param>
+        /// <param name="writtingDict">當前正在寫入的 Dictionary</param>
+        /// <returns>應寫入的值</returns>
+        public delegate object? CustomValuePolicyDelegate(string key, Dictionary<string, object?> writtingDict);
+
+        #endregion ===== Policy delegates =====
     }
 }

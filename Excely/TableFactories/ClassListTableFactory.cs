@@ -85,31 +85,61 @@ namespace Excely.TableFactories
         public bool WithSchema { get; set; } = true;
 
         /// <summary>
-        /// 決定 Property 是否應作為欄位匯出的執行邏輯。
-        /// 輸入參數為 PropertyInfo，輸出結果為「是否應作為欄位匯出」，
+        /// 決定 Property 是否應作為欄位匯出。
         /// 預設為全部欄位都匯出。
         /// </summary>
-        public Func<PropertyInfo, bool> PropertyShowPolicy { get; set; } = _ => true;
+        public PropertyShowPolicyDelegate PropertyShowPolicy { get; set; } = _ => true;
 
         /// <summary>
         /// 決定 Property 作為欄位時的名稱。
-        /// 輸入參數為 PropertyInfo，輸出結果為「欄位名稱」，
         /// 預設為 PropertyInfo.Name。
         /// </summary>
-        public Func<PropertyInfo, string?> PropertyNamePolicy { get; set; } = p => p.Name;
+        public PropertyNamePolicyDelegate PropertyNamePolicy { get; set; } = property => property.Name;
 
         /// <summary>
         /// 決定 Property 作為欄位時的順序。
-        /// 輸入參數為 (所有Properties, 當前PropertyInfo)，輸出結果為「排序(由小到大)」，
         /// 預設為依類別內預設排序。
         /// </summary>
-        public Func<PropertyInfo[], PropertyInfo, int> PropertyOrderPolicy { get; set; } = (properties, p) => Array.IndexOf(properties, p);
+        public PropertyOrderPolicyDelegate PropertyOrderPolicy { get; set; } = (properties, property) => Array.IndexOf(properties, property);
 
         /// <summary>
         /// 決定資料寫入欄位時的值。
-        /// 輸入參數為 (PropertyInfo, 當前匯出物件)，輸出結果為「欲寫入欄位的值」，
         /// 預設為該 Property 之 Value。
         /// </summary>
-        public Func<PropertyInfo, TClass, object?> CustomValuePolicy { get; set; } = (p, obj) => p.GetValue(obj);
+        public CustomValuePolicyDelegate CustomValuePolicy { get; set; } = (property, obj) => property.GetValue(obj);
+
+        #region ===== Policy delegates =====
+
+        /// <summary>
+        /// 決定 Property 是否應作為欄位匯出。
+        /// </summary>
+        /// <param name="property">當前決定的 Property</param>
+        /// <returns>是否應匯出</returns>
+        public delegate bool PropertyShowPolicyDelegate(PropertyInfo property);
+
+        /// <summary>
+        /// 決定 Property 作為欄位時的名稱。
+        /// </summary>
+        /// <param name="property">當前決定的 Property</param>
+        /// <returns>欄位名稱</returns>
+        public delegate string? PropertyNamePolicyDelegate(PropertyInfo property);
+
+        /// <summary>
+        /// 決定 Property 作為欄位時的順序。
+        /// </summary>
+        /// <param name="allProperties">目標類別的所有 Property</param>
+        /// <param name="property">當前決定的 Property</param>
+        /// <returns>欄位權重(越小越靠前)</returns>
+        public delegate int? PropertyOrderPolicyDelegate(PropertyInfo[] allProperties, PropertyInfo property);
+
+        /// <summary>
+        /// 決定資料寫入欄位時的值。
+        /// </summary>
+        /// <param name="property">當前決定的 Property</param>
+        /// <param name="obj">當前寫入的目標物件</param>
+        /// <returns>應寫入的值</returns>
+        public delegate object? CustomValuePolicyDelegate(PropertyInfo property, TClass obj);
+
+        #endregion ===== Policy delegates =====
     }
 }

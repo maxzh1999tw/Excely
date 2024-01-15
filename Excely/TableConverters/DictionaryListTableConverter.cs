@@ -1,4 +1,7 @@
-﻿namespace Excely.TableConverters
+﻿using System.Formats.Asn1;
+using System.Reflection;
+
+namespace Excely.TableConverters
 {
     /// <summary>
     /// 將 Table 轉換為字典列表。
@@ -84,18 +87,35 @@
 
         /// <summary>
         /// 決定欄位作為 Key 時的名稱。
-        /// 輸入參數為 (欄位index, 欄位名稱)，輸出結果為 Key，
         /// 若 HasSchema 為 false 時，欄位名稱將是 null。
         /// 預設為 (欄位名稱 ?? 欄位index)。
-        /// 若 return null，代表此欄位不匯入。
         /// </summary>
-        public Func<int, string?, string?> CustomKeyNamePolicy { get; set; } = (index, fieldName) => fieldName ?? index.ToString();
+        public CustomKeyNamePolicyDelegate CustomKeyNamePolicy { get; set; } = (index, fieldName) => fieldName ?? index.ToString();
 
         /// <summary>
         /// 決定將值寫入至 Vale 時應寫入的值。
-        /// 輸入參數為 (Key, 原始值)，輸出結果為「應寫入的值」。
         /// 預設為原值。
         /// </summary>
-        public Func<string, object?, object?> CustomValuePolicy { get; set; } = (key, value) => value;
+        public CustomValuePolicyDelegate CustomValuePolicy { get; set; } = (key, value) => value;
+
+        #region ===== Policy delegates =====
+
+        /// <summary>
+        /// 決定欄位作為 Key 時的名稱。
+        /// </summary>
+        /// <param name="fieldIndex">欄位index</param>
+        /// <param name="fieldName">欄位名稱</param>
+        /// <returns>用作 key 的字串，若回傳 null，代表此欄位不匯入</returns>
+        public delegate string? CustomKeyNamePolicyDelegate(int fieldIndex, string? fieldName);
+
+        /// <summary>
+        /// 決定將值寫入至 Vale 時應寫入的值。
+        /// </summary>
+        /// <param name="key">代表此欄的 key 值</param>
+        /// <param name="originalValue">原始讀取到的值</param>
+        /// <returns>應寫入的值</returns>
+        public delegate object? CustomValuePolicyDelegate(string key, object? originalValue);
+
+        #endregion ===== Policy delegates =====
     }
 }
