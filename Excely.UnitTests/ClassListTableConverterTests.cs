@@ -299,7 +299,7 @@ namespace Excely.UnitTests
             });
             var options = new ClassListTableConverterOptions<SimpleClass>
             {
-                StopWhenError = false,
+                ThrowWhenError = false,
             };
             var converter = new ClassListTableConverter<SimpleClass>();
 
@@ -323,7 +323,7 @@ namespace Excely.UnitTests
             var errors = new Dictionary<CellLocation, Exception>();
             var options = new ClassListTableConverterOptions<SimpleClass>
             {
-                StopWhenError = false,
+                ThrowWhenError = false,
                 ErrorHandlingPolicy = (location, obj, p, value, err) =>
                 {
                     errors.Add(location, err);
@@ -363,7 +363,7 @@ namespace Excely.UnitTests
             });
             var options = new ClassListTableConverterOptions<SimpleClass>
             {
-                StopWhenError = false,
+                ThrowWhenError = false,
             };
             var converter = new ClassListTableConverter<SimpleClass>(options);
 
@@ -397,7 +397,7 @@ namespace Excely.UnitTests
             var errors = new Dictionary<CellLocation, Exception>();
             var options = new ClassListTableConverterOptions<SimpleNullableClass>
             {
-                StopWhenError = false,
+                ThrowWhenError = false,
                 ErrorHandlingPolicy = (location, obj, p, value, err) =>
                 {
                     p.SetValue(obj, null);

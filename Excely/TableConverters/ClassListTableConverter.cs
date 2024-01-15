@@ -135,7 +135,7 @@ namespace Excely.TableConverters
                         var errorFixed = Options.ErrorHandlingPolicy(new CellLocation(rowIndex, columnIndex), obj, property, value, ex);
 
                         // 錯誤處理失敗，且要求停止
-                        if (!errorFixed && Options.StopWhenError)
+                        if (!errorFixed && Options.ThrowWhenError)
                         {
                             throw;
                         }
@@ -172,40 +172,78 @@ namespace Excely.TableConverters
         /// 當轉換發生錯誤時是否立刻停止。
         /// 若此欄為 false，則發生錯誤時會跳過該 Row，繼續執行匯入。
         /// </summary>
-        public bool StopWhenError { get; set; } = true;
-
-        /// <summary>
-        /// 決定 Property 作為欄位時的名稱。
-        /// 輸入參數為 PropertyInfo，輸出結果為「欄位名稱」，
-        /// 預設為 Property.Name。
-        /// </summary>
-        public Func<PropertyInfo, string?> PropertyNamePolicy { get; set; } = prop => prop.Name;
-
-        /// <summary>
-        /// 決定 Property 出現在表頭時的位置。
-        /// 輸入參數為 (所有Properties, PropertyInfo)，輸出結果為「欄位索引」，
-        /// 若該 Property 沒有出現在表頭中，請回傳 null。
-        /// 預設為依照 property 預設順序排序。
-        /// </summary>
-        public Func<PropertyInfo[], PropertyInfo, int?> PropertyIndexPolicy { get; set; } = (props, prop) => Array.IndexOf(props, prop);
-
-        /// <summary>
-        /// 決定將值寫入至 Property 時應寫入的值。
-        /// 輸入參數為 (PropertyInfo, 原始值)，輸出結果為「應寫入的值」。
-        /// 預設為原值。
-        /// </summary>
-        public Func<PropertyInfo, object?, object?> PropertyValueSettingPolicy { get; set; } = (prop, obj) => obj;
-
-        /// <summary>
-        /// 將值輸入進物件發生錯誤時，決定錯誤處理方式。
-        /// 輸入參數為 (儲存格座標, 目標物件, PropertyInfo, 嘗試輸入的值, 發生的錯誤)，輸出結果為「錯誤是否得到修正」。
-        /// 預設為不處理錯誤。
-        /// </summary>
-        public Func<CellLocation, TClass, PropertyInfo, object?, Exception, bool> ErrorHandlingPolicy { get; set; } = (_, _, _, _, _) => false;
+        public bool ThrowWhenError { get; set; } = true;
 
         /// <summary>
         /// 當寫入的值與目標型別不同時，是否自動嘗試轉換。
         /// </summary>
         public bool EnableAutoTypeConversion { get; set; } = true;
+
+        /// <summary>
+        /// 決定 Property 作為欄位時的名稱。
+        /// 預設為 PropertyInfo.Name
+        /// </summary>
+        public PropertyNamePolicyDelegate PropertyNamePolicy { get; set; } = property => property.Name;
+
+        /// <summary>
+        /// 取得 Property 出現在表頭時的位置。
+        /// 預設為依類別內預設排序。
+        /// </summary>
+        public PropertyIndexPolicyDelegate PropertyIndexPolicy { get; set; } = (propertys, property) => Array.IndexOf(propertys, property);
+
+        /// <summary>
+        /// 決定將值寫入至 Property 時應寫入的值。
+        /// 預設為原值。
+        /// </summary>
+        public PropertyValueSettingPolicyDelegate PropertyValueSettingPolicy { get; set; } = (prop, obj) => obj;
+
+        /// <summary>
+        /// 將值輸入進物件發生錯誤時，決定錯誤處理方式。
+        /// 預設為不處理錯誤。
+        /// </summary>
+        public ErrorHandlingPolicyDelegate ErrorHandlingPolicy { get; set; } = (_, _, _, _, _) => false;
+
+        #region ===== Policy delegates =====
+
+        /// <summary>
+        /// 取得 Property 作為欄位時的名稱。
+        /// </summary>
+        /// <param name="property">當前決定的 Property</param>
+        /// <returns>欄位名稱</returns>
+        public delegate string? PropertyNamePolicyDelegate(PropertyInfo property);
+
+        /// <summary>
+        /// 取得 Property 作為欄位時的位置。
+        /// </summary>
+        /// <param name="allProperties">目標類別的所有 Property</param>
+        /// <param name="property">當前決定的 Property</param>
+        /// <returns>欄位權重(越小越靠前)，若回傳 null，代表此 Property 沒有對應的欄位</returns>
+        public delegate int? PropertyIndexPolicyDelegate(PropertyInfo[] allProperties, PropertyInfo property);
+
+        /// <summary>
+        /// 決定將值寫入至 Property 時應寫入的值。
+        /// </summary>
+        /// <param name="property">當前寫入欄位</param>
+        /// <param name="originalValue">原始讀取到的值</param>
+        /// <returns>欲寫入的值</returns>
+        public delegate object? PropertyValueSettingPolicyDelegate(PropertyInfo property, object? originalValue);
+
+        /// <summary>
+        /// 將值輸入進物件發生錯誤時，決定錯誤處理方式。
+        /// </summary>
+        /// <param name="cellLocation">發生錯誤的座標</param>
+        /// <param name="writtingObject">正在寫入的目標物件</param>
+        /// <param name="writtingProperty">正在寫入的目標 Property</param>
+        /// <param name="writtingValue">嘗試寫入的值</param>
+        /// <param name="exception">發生的錯誤</param>
+        /// <returns>錯誤是否得到修正</returns>
+        public delegate bool ErrorHandlingPolicyDelegate(
+            CellLocation cellLocation,
+            TClass writtingObject,
+            PropertyInfo writtingProperty,
+            object? writtingValue,
+            Exception exception);
+
+        #endregion ===== Policy delegates =====
     }
 }
