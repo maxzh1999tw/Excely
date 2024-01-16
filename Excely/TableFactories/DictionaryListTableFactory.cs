@@ -1,4 +1,7 @@
-﻿namespace Excely.TableFactories
+﻿using System.Formats.Asn1;
+using System.Reflection;
+
+namespace Excely.TableFactories
 {
     /// <summary>
     /// 提供以字典 Key 為欄位，將字典集合傾印至表格的功能。
@@ -77,25 +80,33 @@
         /// 決定 key 是否應作為欄位匯出。
         /// 預設為全部欄位都匯出。
         /// </summary>
-        public KeyShowPolicyDelegate KeyShowPolicy { get; set; } = _ => true;
+        public KeyShowPolicyDelegate KeyShowPolicy { get; set; }
 
         /// <summary>
         /// 決定 key 作為欄位時的名稱。
         /// 預設為 key。
         /// </summary>
-        public KeyNamePolicyDelegate KeyNamePolicy { get; set; } = key => key;
+        public KeyNamePolicyDelegate KeyNamePolicy { get; set; }
 
         /// <summary>
         /// 決定 key 作為欄位時的權重(越小越靠前)。
         /// 預設為 key 的預設順序。
         /// </summary>
-        public KeyOrderPolicyDelegate KeyOrderPolicy { get; set; } = (allKeys, key) => Array.IndexOf(allKeys, key);
+        public KeyOrderPolicyDelegate KeyOrderPolicy { get; set; }
 
         /// <summary>
         /// 決定資料寫入欄位時的值。
         /// 預設為 Value。
         /// </summary>
-        public CustomValuePolicyDelegate CustomValuePolicy { get; set; } = (key, dict) => dict.GetValueOrDefault(key, null);
+        public CustomValuePolicyDelegate CustomValuePolicy { get; set; }
+
+        public DictionaryListTableFactoryOptions()
+        {
+            KeyShowPolicy = DefaultKeyShowPolicy;
+            KeyNamePolicy = DefaultKeyNamePolicy;
+            KeyOrderPolicy = DefaultKeyOrderPolicy;
+            CustomValuePolicy = DefaultCustomValuePolicy;
+        }
 
         #region ===== Policy delegates =====
 
@@ -130,5 +141,17 @@
         public delegate object? CustomValuePolicyDelegate(string key, Dictionary<string, object?> writtingDict);
 
         #endregion ===== Policy delegates =====
+
+        #region ===== Default policies =====
+
+        public static bool DefaultKeyShowPolicy(string key) => true;
+
+        public static string? DefaultKeyNamePolicy(string key) => key;
+
+        public static int DefaultKeyOrderPolicy(string[] allKeys, string key) => Array.IndexOf(allKeys, key);
+
+        public static object? DefaultCustomValuePolicy(string key, Dictionary<string, object?> writtingDict) => writtingDict.GetValueOrDefault(key, null);
+
+        #endregion ===== Default policies =====
     }
 }

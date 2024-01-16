@@ -88,25 +88,33 @@ namespace Excely.TableFactories
         /// 決定 Property 是否應作為欄位匯出。
         /// 預設為全部欄位都匯出。
         /// </summary>
-        public PropertyShowPolicyDelegate PropertyShowPolicy { get; set; } = _ => true;
+        public PropertyShowPolicyDelegate PropertyShowPolicy { get; set; }
 
         /// <summary>
         /// 決定 Property 作為欄位時的名稱。
         /// 預設為 PropertyInfo.Name。
         /// </summary>
-        public PropertyNamePolicyDelegate PropertyNamePolicy { get; set; } = property => property.Name;
+        public PropertyNamePolicyDelegate PropertyNamePolicy { get; set; }
 
         /// <summary>
         /// 決定 Property 作為欄位時的順序。
         /// 預設為依類別內預設排序。
         /// </summary>
-        public PropertyOrderPolicyDelegate PropertyOrderPolicy { get; set; } = (properties, property) => Array.IndexOf(properties, property);
+        public PropertyOrderPolicyDelegate PropertyOrderPolicy { get; set; }
 
         /// <summary>
         /// 決定資料寫入欄位時的值。
         /// 預設為該 Property 之 Value。
         /// </summary>
-        public CustomValuePolicyDelegate CustomValuePolicy { get; set; } = (property, obj) => property.GetValue(obj);
+        public CustomValuePolicyDelegate CustomValuePolicy { get; set; }
+
+        public ClassListTableFactoryOptions()
+        {
+            PropertyShowPolicy = DefaultPropertyShowPolicy;
+            PropertyNamePolicy = DefaultPropertyNamePolicy;
+            PropertyOrderPolicy = DefaultPropertyOrderPolicy;
+            CustomValuePolicy = DefaultCustomValuePolicy;
+        }
 
         #region ===== Policy delegates =====
 
@@ -141,5 +149,17 @@ namespace Excely.TableFactories
         public delegate object? CustomValuePolicyDelegate(PropertyInfo property, TClass obj);
 
         #endregion ===== Policy delegates =====
+
+        #region ===== Default policies =====
+
+        public static bool DefaultPropertyShowPolicy(PropertyInfo property) => true;
+
+        public static string? DefaultPropertyNamePolicy(PropertyInfo property) => property.Name;
+
+        public static int? DefaultPropertyOrderPolicy(PropertyInfo[] allProperties, PropertyInfo property) => Array.IndexOf(allProperties, property);
+
+        public static object? DefaultCustomValuePolicy(PropertyInfo property, TClass obj) => property.GetValue(obj);
+
+        #endregion ===== Default policies =====
     }
 }

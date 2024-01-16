@@ -1,4 +1,8 @@
-﻿namespace Excely.TableConverters
+﻿using System;
+using System.Formats.Asn1;
+using System.Reflection;
+
+namespace Excely.TableConverters
 {
     /// <summary>
     /// 將 Table 轉換為字典列表。
@@ -87,13 +91,19 @@
         /// 若 HasSchema 為 false 時，欄位名稱將是 null。
         /// 預設為 (欄位名稱 ?? 欄位index)。
         /// </summary>
-        public CustomKeyNamePolicyDelegate CustomKeyNamePolicy { get; set; } = (index, fieldName) => fieldName ?? index.ToString();
+        public CustomKeyNamePolicyDelegate CustomKeyNamePolicy { get; set; }
 
         /// <summary>
         /// 決定將值寫入至 Vale 時應寫入的值。
         /// 預設為原值。
         /// </summary>
-        public CustomValuePolicyDelegate CustomValuePolicy { get; set; } = (key, value) => value;
+        public CustomValuePolicyDelegate CustomValuePolicy { get; set; }
+
+        public DictionaryListTableConverterOptions()
+        {
+            CustomKeyNamePolicy = DefaultCustomKeyNamePolicy;
+            CustomValuePolicy = DefaultCustomValuePolicy;
+        }
 
         #region ===== Policy delegates =====
 
@@ -114,5 +124,13 @@
         public delegate object? CustomValuePolicyDelegate(string key, object? originalValue);
 
         #endregion ===== Policy delegates =====
+
+        #region ===== Default policies =====
+
+        public static string? DefaultCustomKeyNamePolicy(int fieldIndex, string? fieldName) => fieldName ?? fieldIndex.ToString();
+
+        public static object? DefaultCustomValuePolicy(string key, object? originalValue) => originalValue;
+
+        #endregion ===== Default policies =====
     }
 }

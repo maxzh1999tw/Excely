@@ -37,7 +37,6 @@ namespace Excely.TableConverters
         }
         #endregion
 
-
         /// <summary>
         /// 將指定的 Table 轉換為 Class list。
         /// </summary>
@@ -183,25 +182,33 @@ namespace Excely.TableConverters
         /// 決定 Property 作為欄位時的名稱。
         /// 預設為 PropertyInfo.Name
         /// </summary>
-        public PropertyNamePolicyDelegate PropertyNamePolicy { get; set; } = property => property.Name;
+        public PropertyNamePolicyDelegate PropertyNamePolicy { get; set; }
 
         /// <summary>
         /// 取得 Property 出現在表頭時的位置。
         /// 預設為依類別內預設排序。
         /// </summary>
-        public PropertyIndexPolicyDelegate PropertyIndexPolicy { get; set; } = (propertys, property) => Array.IndexOf(propertys, property);
+        public PropertyIndexPolicyDelegate PropertyIndexPolicy { get; set; }
 
         /// <summary>
         /// 決定將值寫入至 Property 時應寫入的值。
         /// 預設為原值。
         /// </summary>
-        public PropertyValueSettingPolicyDelegate PropertyValueSettingPolicy { get; set; } = (prop, obj) => obj;
+        public PropertyValueSettingPolicyDelegate PropertyValueSettingPolicy { get; set; }
 
         /// <summary>
         /// 將值輸入進物件發生錯誤時，決定錯誤處理方式。
         /// 預設為不處理錯誤。
         /// </summary>
-        public ErrorHandlingPolicyDelegate ErrorHandlingPolicy { get; set; } = (_, _, _, _, _) => false;
+        public ErrorHandlingPolicyDelegate ErrorHandlingPolicy { get; set; }
+
+        public ClassListTableConverterOptions()
+        {
+            PropertyNamePolicy = DefaultPropertyNamePolicy;
+            PropertyIndexPolicy = DefaultPropertyIndexPolicy;
+            PropertyValueSettingPolicy = DefaultPropertyValueSettingPolicy;
+            ErrorHandlingPolicy = DefaultErrorHandlingPolicyDelegate;
+        }
 
         #region ===== Policy delegates =====
 
@@ -245,5 +252,22 @@ namespace Excely.TableConverters
             Exception exception);
 
         #endregion ===== Policy delegates =====
+
+        #region ===== Default policies =====
+
+        public static string? DefaultPropertyNamePolicy(PropertyInfo property) => property.Name;
+
+        public static int? DefaultPropertyIndexPolicy(PropertyInfo[] allProperties, PropertyInfo property) => Array.IndexOf(allProperties, property);
+        
+        public static object? DefaultPropertyValueSettingPolicy(PropertyInfo property, object? originalValue) => originalValue;
+        
+        public static bool DefaultErrorHandlingPolicyDelegate(
+            CellLocation cellLocation,
+            TClass writtingObject,
+            PropertyInfo writtingProperty,
+            object? writtingValue,
+            Exception exception) => false;
+
+        #endregion ===== Default policies =====
     }
 }
