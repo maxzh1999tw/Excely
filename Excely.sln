@@ -11,7 +11,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Excely.UnitTests", "Excely.
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Excely.ClosedXML", "Excely.ClosedXML\Excely.ClosedXML.csproj", "{C3137C4B-EBA0-4720-8B29-7C0B0202A55F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Excely.ClosedXML.UnitTests", "Excely.ClosedXML.UnitTests\Excely.ClosedXML.UnitTests.csproj", "{075DACAA-3E1D-46E6-B094-0E119B56673B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Excely.ClosedXML.UnitTests", "Excely.ClosedXML.UnitTests\Excely.ClosedXML.UnitTests.csproj", "{075DACAA-3E1D-46E6-B094-0E119B56673B}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "UnitTests", "UnitTests", "{05E1BF0C-B2F1-41C1-B5AB-52C001A3D557}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -42,6 +44,10 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{11B8A44D-707F-405C-ACDC-2AF4AC8F3D5F} = {05E1BF0C-B2F1-41C1-B5AB-52C001A3D557}
+		{075DACAA-3E1D-46E6-B094-0E119B56673B} = {05E1BF0C-B2F1-41C1-B5AB-52C001A3D557}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {8088CDCF-8B6D-44D9-98D2-115F316741C5}
