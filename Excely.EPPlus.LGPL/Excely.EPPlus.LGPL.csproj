@@ -6,7 +6,7 @@
     <Nullable>enable</Nullable>
     <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
     <PackageLicenseFile>LICENSE</PackageLicenseFile>
-    <Version>0.1.0-alpha</Version>
+    <Version>1.0.0</Version>
     <Authors>Max Zheng</Authors>
     <Description>Excely 的 EPPlus 擴展，以最後一版 LGPL 的 EPPlus 來處理 Excel 檔案。</Description>
     <Copyright>Copyright (c) MaxZheng 2023</Copyright>
@@ -16,7 +16,7 @@
     <RepositoryUrl>https://github.com/maxzh1999tw/Excely</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
     <PackageTags>excel,csv,import,export</PackageTags>
-    <PackageReleaseNotes>預覽版本</PackageReleaseNotes>
+    <PackageReleaseNotes></PackageReleaseNotes>
   </PropertyGroup>
 
   <ItemGroup>

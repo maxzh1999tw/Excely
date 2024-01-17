@@ -1,7 +1,4 @@
-﻿using System.Formats.Asn1;
-using System.Reflection;
-
-namespace Excely.TableFactories
+﻿namespace Excely.TableFactories
 {
     /// <summary>
     /// 提供以字典 Key 為欄位，將字典集合傾印至表格的功能。

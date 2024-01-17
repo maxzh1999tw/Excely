@@ -258,9 +258,9 @@ namespace Excely.TableConverters
         public static string? DefaultPropertyNamePolicy(PropertyInfo property) => property.Name;
 
         public static int? DefaultPropertyIndexPolicy(PropertyInfo[] allProperties, PropertyInfo property) => Array.IndexOf(allProperties, property);
-        
+
         public static object? DefaultPropertyValueSettingPolicy(PropertyInfo property, object? originalValue) => originalValue;
-        
+
         public static bool DefaultErrorHandlingPolicyDelegate(
             CellLocation cellLocation,
             TClass writtingObject,

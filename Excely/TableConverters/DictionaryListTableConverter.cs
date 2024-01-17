@@ -1,8 +1,4 @@
-﻿using System;
-using System.Formats.Asn1;
-using System.Reflection;
-
-namespace Excely.TableConverters
+﻿namespace Excely.TableConverters
 {
     /// <summary>
     /// 將 Table 轉換為字典列表。
