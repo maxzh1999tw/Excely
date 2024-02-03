@@ -10,6 +10,8 @@ namespace Excely.Workflows
     {
         protected abstract ExcelyTable GetTable(TInput input);
 
+        public List<Action<ExcelyTable>> DoAfterGetTableCallbackList { get; set; } = new List<Action<ExcelyTable>>();
+
         /// <summary>
         /// 將資料匯入為物件列表。
         /// </summary>
@@ -23,6 +25,7 @@ namespace Excely.Workflows
             where TClass : class, new()
         {
             var table = GetTable(dataSource);
+            DoAfterGetTableCallbackList.ForEach(x => x.Invoke(table));
             var converter = options == null ? new ClassListTableConverter<TClass>() : new ClassListTableConverter<TClass>(options);
             return converter.ConvertFrom(table);
         }
@@ -38,6 +41,7 @@ namespace Excely.Workflows
             DictionaryListTableConverterOptions? options = null)
         {
             var table = GetTable(dataSource);
+            DoAfterGetTableCallbackList.ForEach(x => x.Invoke(table));
             var converter = options == null ? new DictionaryListTableConverter() : new DictionaryListTableConverter(options);
             return converter.ConvertFrom(table);
         }
