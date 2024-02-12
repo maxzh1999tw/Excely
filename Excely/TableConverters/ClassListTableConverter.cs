@@ -92,11 +92,11 @@ namespace Excely.TableConverters
                         continue;
                     }
 
+                    // 取得欄位解析結果
+                    var value = Options.PropertyValueSettingPolicy(property, table.Data[rowIndex][columnIndex]);
+
                     try
                     {
-                        // 取得欄位解析結果
-                        var value = Options.PropertyValueSettingPolicy(property, table.Data[rowIndex][columnIndex]);
-
                         // 嘗試自動轉型
                         if (value != null && Options.EnableAutoTypeConversion)
                         {
@@ -131,7 +131,7 @@ namespace Excely.TableConverters
                     catch (Exception ex)
                     {
                         // 執行錯誤處理
-                        var errorFixed = Options.ErrorHandlingPolicy(new CellLocation(rowIndex, columnIndex), obj, property, table.Data[rowIndex][columnIndex], ex);
+                        var errorFixed = Options.ErrorHandlingPolicy(new CellLocation(rowIndex, columnIndex), obj, property, value, ex);
 
                         // 錯誤處理失敗，且要求停止
                         if (!errorFixed && Options.ThrowWhenError)

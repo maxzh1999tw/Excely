@@ -15,8 +15,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Excely.ClosedXML.UnitTests"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "UnitTests", "UnitTests", "{05E1BF0C-B2F1-41C1-B5AB-52C001A3D557}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Debug", "Debug\Debug.csproj", "{7BCFF4FE-F23D-4BDC-8D32-E22148C29F08}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -43,10 +41,6 @@ Global
 		{075DACAA-3E1D-46E6-B094-0E119B56673B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{075DACAA-3E1D-46E6-B094-0E119B56673B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{075DACAA-3E1D-46E6-B094-0E119B56673B}.Release|Any CPU.Build.0 = Release|Any CPU
-		{7BCFF4FE-F23D-4BDC-8D32-E22148C29F08}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{7BCFF4FE-F23D-4BDC-8D32-E22148C29F08}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{7BCFF4FE-F23D-4BDC-8D32-E22148C29F08}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{7BCFF4FE-F23D-4BDC-8D32-E22148C29F08}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
