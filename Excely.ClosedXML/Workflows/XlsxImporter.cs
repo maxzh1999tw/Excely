@@ -1,6 +1,5 @@
 ﻿using ClosedXML.Excel;
 using Excely.ClosedXML.TableFactories;
-using Excely.TableConverters;
 
 namespace Excely.Workflows
 {
