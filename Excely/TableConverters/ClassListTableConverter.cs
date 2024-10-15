@@ -1,6 +1,5 @@
 ﻿using System.ComponentModel;
 using System.Reflection;
-using static Excely.TableConverters.ClassListTableConverterOptions<TClass>;
 
 namespace Excely.TableConverters
 {

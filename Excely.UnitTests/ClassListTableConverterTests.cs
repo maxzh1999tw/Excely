@@ -400,7 +400,7 @@ namespace Excely.UnitTests
 				ThrowWhenError = false,
 				ErrorHandlingPolicy = param =>
 				{
-					p.SetValue(param.WrittingObject, null);
+					param.WrittingProperty.SetValue(param.WrittingObject, null);
 					return true;
 				}
 			};
