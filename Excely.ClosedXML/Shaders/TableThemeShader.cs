@@ -43,7 +43,7 @@ namespace Excely.ClosedXML.Shaders
             TableHeight = tableHeight;
         }
 
-        protected override void ExcuteOnWorksheet(IXLWorksheet worksheet)
+        protected override void ExecuteOnWorksheet(IXLWorksheet worksheet)
         {
             var tableWidth = TableWidth;
             if (TableWidth == 0)

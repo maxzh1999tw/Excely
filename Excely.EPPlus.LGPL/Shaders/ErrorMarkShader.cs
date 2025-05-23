@@ -36,7 +36,7 @@ namespace Excely.EPPlus.LGPL.Shaders
 			Author = author;
 		}
 
-		protected override void ExcuteOnWorksheet(ExcelWorksheet worksheet)
+		protected override void ExecuteOnWorksheet(ExcelWorksheet worksheet)
 		{
 			foreach (var cellError in CellErrors)
 			{
@@ -45,5 +45,5 @@ namespace Excely.EPPlus.LGPL.Shaders
 				cell.AddComment(cellError.Value, Author);
 			}
 		}
-	}
+        }
 }

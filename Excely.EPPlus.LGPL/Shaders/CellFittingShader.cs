@@ -7,7 +7,7 @@ namespace Excely.EPPlus.LGPL.Shaders
     /// </summary>
     public class CellFittingShader : XlsxShaderBase
     {
-        protected override void ExcuteOnWorksheet(ExcelWorksheet worksheet)
+        protected override void ExecuteOnWorksheet(ExcelWorksheet worksheet)
         {
             worksheet.Cells.AutoFitColumns();
             worksheet.Cells.Style.WrapText = true;

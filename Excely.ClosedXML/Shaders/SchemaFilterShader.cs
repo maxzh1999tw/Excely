@@ -27,7 +27,7 @@ namespace Excely.ClosedXML.Shaders
             StartCell = startCell;
         }
 
-        protected override void ExcuteOnWorksheet(IXLWorksheet target)
+        protected override void ExecuteOnWorksheet(IXLWorksheet target)
         {
             var schemaLength = SchemaLength;
             if (SchemaLength == 0)

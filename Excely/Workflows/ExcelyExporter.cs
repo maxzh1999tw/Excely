@@ -47,7 +47,7 @@ namespace Excely.Workflows
             var result = tableWriter.ConvertFrom(table);
             foreach (var shaders in Shaders)
             {
-                result = shaders.Excute(result);
+                result = shaders.Execute(result);
             }
             return result;
         }
@@ -64,7 +64,7 @@ namespace Excely.Workflows
             var result = tableWriter.ConvertFrom(table);
             foreach (var shaders in Shaders)
             {
-                result = shaders.Excute(result);
+                result = shaders.Execute(result);
             }
             return result;
         }
