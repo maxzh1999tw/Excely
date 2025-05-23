@@ -18,7 +18,7 @@
         /// <summary>
         /// 表格寬度。
         /// </summary>
-        public int MaxColumnCount => Data.OrderBy(x => x.Count).FirstOrDefault()?.Count ?? 0;
+        public int MaxColumnCount => Data.Any() ? Data.Max(x => x.Count) : 0;
 
         public ExcelyTable(IList<IList<object?>> data)
         {
