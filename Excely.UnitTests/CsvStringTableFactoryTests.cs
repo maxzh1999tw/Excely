@@ -187,6 +187,5 @@ namespace Excely.UnitTests
             // Assert is handled by ExpectedException
         }
 
-        // 可以根據需要添加更多的測試案例...
     }
 }

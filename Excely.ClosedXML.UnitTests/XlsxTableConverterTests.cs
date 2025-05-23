@@ -7,7 +7,7 @@ namespace Excely.ClosedXML.UnitTests
     public class XlsxTableConverterTests
     {
         /// <summary>
-        /// 確保 ClosedXML 在處理字串時不會自動轉型為數字
+}
         /// </summary>
         [TestMethod]
         public void ConvertPaddingStartWith0Data_ShouldReturnExcelWithCurrectData()

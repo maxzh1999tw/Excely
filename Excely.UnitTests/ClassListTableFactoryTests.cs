@@ -113,6 +113,5 @@ namespace Excely.UnitTests
 			Assert.AreEqual("Id", table.Data[0][1]);
 		}
 
-		// 可以根據需要添加更多的測試案例...
 	}
 }
