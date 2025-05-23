@@ -25,7 +25,7 @@ namespace Excely.ClosedXML.Shaders
 			CellErrors = errorCells ?? new();
 		}
 
-		protected override void ExcuteOnWorksheet(IXLWorksheet worksheet)
+		protected override void ExecuteOnWorksheet(IXLWorksheet worksheet)
 		{
 			foreach (var cellError in CellErrors)
 			{

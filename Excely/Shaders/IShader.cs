@@ -11,6 +11,6 @@
         /// <param name="target">執行目標</param>
         /// <typeparam name="TOutput">匯出結果的載體</typeparam>
         /// <returns>執行結果</returns>
-        TOutput Excute<TOutput>(TOutput target);
+        TOutput Execute<TOutput>(TOutput target);
     }
 }

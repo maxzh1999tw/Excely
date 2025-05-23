@@ -27,7 +27,7 @@ namespace Excely.EPPlus.LGPL.Shaders
             StartCell = startCell;
         }
 
-        protected override void ExcuteOnWorksheet(ExcelWorksheet target)
+        protected override void ExecuteOnWorksheet(ExcelWorksheet target)
         {
             var schemaLength = SchemaLength;
             if (schemaLength == 0)

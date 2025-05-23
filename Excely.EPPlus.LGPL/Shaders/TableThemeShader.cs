@@ -41,7 +41,7 @@ namespace Excely.EPPlus.LGPL.Shaders
             TableHeight = tableHeight;
         }
 
-        protected override void ExcuteOnWorksheet(ExcelWorksheet worksheet)
+        protected override void ExecuteOnWorksheet(ExcelWorksheet worksheet)
         {
             // 設定標題的背景色和文字色
             var header = worksheet.Cells[StartCell.Row + 1, StartCell.Column + 1, StartCell.Row + SchemaHeight, StartCell.Column + TableWidth];

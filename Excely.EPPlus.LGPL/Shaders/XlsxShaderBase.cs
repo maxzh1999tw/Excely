@@ -8,17 +8,17 @@ namespace Excely.EPPlus.LGPL.Shaders
     /// </summary>
     public abstract class XlsxShaderBase : IShader
     {
-        public T Excute<T>(T target)
+        public T Execute<T>(T target)
         {
             if (target is ExcelWorksheet worksheet)
             {
-                ExcuteOnWorksheet(worksheet);
+                ExecuteOnWorksheet(worksheet);
                 return target;
             }
 
             throw new NotImplementedException();
         }
 
-        protected abstract void ExcuteOnWorksheet(ExcelWorksheet worksheet);
+        protected abstract void ExecuteOnWorksheet(ExcelWorksheet worksheet);
     }
 }

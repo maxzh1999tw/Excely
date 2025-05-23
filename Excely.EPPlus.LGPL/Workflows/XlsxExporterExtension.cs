@@ -19,7 +19,7 @@ namespace Excely.Workflows
             tableWriter.ConvertFrom(table);
             foreach (var shaders in exporter.Shaders)
             {
-                worksheet = shaders.Excute(worksheet);
+                worksheet = shaders.Execute(worksheet);
             }
         }
 

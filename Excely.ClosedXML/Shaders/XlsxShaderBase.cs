@@ -8,17 +8,17 @@ namespace Excely.ClosedXML.Shaders
     /// </summary>
     public abstract class XlsxShaderBase : IShader
     {
-        public T Excute<T>(T target)
+        public T Execute<T>(T target)
         {
             if (target is IXLWorksheet worksheet)
             {
-                ExcuteOnWorksheet(worksheet);
+                ExecuteOnWorksheet(worksheet);
                 return target;
             }
 
             throw new NotImplementedException();
         }
 
-        protected abstract void ExcuteOnWorksheet(IXLWorksheet worksheet);
+        protected abstract void ExecuteOnWorksheet(IXLWorksheet worksheet);
     }
 }

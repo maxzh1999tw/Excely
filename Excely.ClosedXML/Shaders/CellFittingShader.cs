@@ -10,7 +10,7 @@ namespace Excely.ClosedXML.Shaders
         public double MinWidth { get; set; } = 1;
         public double MaxWidth { get; set; } = 50;
 
-        protected override void ExcuteOnWorksheet(IXLWorksheet worksheet)
+        protected override void ExecuteOnWorksheet(IXLWorksheet worksheet)
         {
             worksheet.Columns().AdjustToContents(MinWidth, MaxWidth);
             worksheet.Columns().Style.Alignment.WrapText = true;
