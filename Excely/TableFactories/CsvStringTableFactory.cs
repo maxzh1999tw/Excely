@@ -104,7 +104,7 @@ namespace Excely.TableFactories
                     }
 
                     // 換行
-                    else if (i < sourceData.Length - 2 && sourceData.Substring(i + 1, 2) == "\r\n")
+                    else if (i < sourceData.Length - 1 && sourceData.Substring(i, 2) == "\r\n")
                     {
                         SaveColumn(row, columnBuilder);
                         SaveRow(result, ref row);
