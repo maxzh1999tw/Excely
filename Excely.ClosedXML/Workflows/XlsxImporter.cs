@@ -31,7 +31,7 @@ namespace Excely.Workflows
 
 		protected override IXLWorksheet GetDataSource(string filePath)
 		{
-			var workbook = new XLWorkbook(filePath);
+			using var workbook = new XLWorkbook(filePath);
 			return workbook.Worksheet(1);
 		}
 	}
